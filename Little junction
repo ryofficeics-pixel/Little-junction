@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0e2028">
+<title>Little Junction — Tabletop Railway</title>
+<style>
+:root{color-scheme:dark;--bg:#0e2028;--panel:#162c35;--line:#2b424a;--ink:#ecede3;--muted:#93a8ae;--yellow:#ffc66b;--green:#8ac9ab}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input{font:inherit}
+button{cursor:pointer;touch-action:manipulation;border:1px solid var(--line);border-radius:9px;background:#203943;color:var(--ink);padding:10px 13px;min-height:42px}
+button:hover{background:#2b4851}
+button:focus-visible,input:focus-visible,canvas:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+button[aria-pressed=true]{background:var(--yellow);color:#183039;border-color:var(--yellow)}
+header{height:86px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--line);gap:15px}
+.brand{display:flex;gap:13px;align-items:center}
+.badge{height:43px;width:43px;display:grid;place-items:center;border-radius:11px;background:var(--yellow);color:#16303b}
+.brand h1{font-size:22px;letter-spacing:-.7px;margin:0;line-height:1.1}
+.brand small{font-size:9px;letter-spacing:2.2px;color:var(--muted)}
+.headbuttons{display:flex;gap:8px}
+.headbuttons button{font-size:12px}
+.live{font-size:10px;letter-spacing:1.3px;color:var(--green);margin-right:12px}
+.dot{display:inline-block;width:6px;height:6px;background:var(--green);border-radius:50%;margin-right:7px;box-shadow:0 0 9px #8ac9ab60}
+main{display:grid;grid-template-columns:minmax(0,1fr) 286px;min-height:calc(100svh - 86px)}
+.world{position:relative;overflow:hidden;min-height:590px;background:#e7dcc6;isolation:isolate}
+canvas{display:block;width:100%;height:100%;position:absolute;inset:0;touch-action:none;cursor:grab}
+canvas:active{cursor:grabbing}
+.scene-title{position:absolute;top:24px;left:26px;pointer-events:none;color:#344e47}
+.eyebrow{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:1.9px}
+.scene-title h2{font-family:Georgia,serif;font-size:31px;font-weight:normal;margin:8px 0 5px;letter-spacing:-.7px}
+.scene-title p{font-size:11px;margin:0;opacity:.75}
+.scene-title.night{color:#dbe7df}
+.view{position:absolute;right:17px;top:20px;display:flex;gap:5px}
+.view button{background:#f4ead6d9;border:1px solid #6d7b6340;color:#304f45;padding:7px 12px;box-shadow:0 2px 5px #11252a0a}
+.view button:hover{background:#fff4df}
+.scene-footer{position:absolute;bottom:17px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none}
+.legend{color:#38594b;font-size:10px;letter-spacing:.4px;background:#f8efdacc;border:1px solid #62846833;padding:8px 11px;border-radius:7px}
+.legend b{color:#967345}
+.worldstatus{display:flex;align-items:center;gap:7px;color:#244c42;background:#f8efdbe6;border-radius:20px;padding:8px 12px;font:10px ui-monospace,monospace}
+.worldstatus i{height:6px;width:6px;background:#487f60;border-radius:50%}
+.toast{position:absolute;left:50%;bottom:65px;transform:translate(-50%,12px);background:#102c30ed;color:#fff0d6;padding:12px 18px;border-radius:9px;max-width:90%;font-size:12px;line-height:1.5;text-align:center;opacity:0;transition:.2s;pointer-events:none;box-shadow:0 7px 22px #0e202830}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+aside{padding:22px 20px 18px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:20px}
+aside h2{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:0 0 13px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.trainname{font-weight:650;font-size:14px}
+.trainname span{color:var(--yellow);margin-right:6px}
+.tag{font:9px ui-monospace,monospace;padding:5px 7px;border:1px solid var(--line);border-radius:4px;color:var(--green)}
+.speedbox{display:flex;align-items:baseline;gap:7px;margin-top:13px}
+.speedbox strong{font:38px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:-2px}
+.speedbox small{color:var(--muted);font-size:10px}
+.speedbox .mini{margin-left:auto;color:var(--muted);font:10px ui-monospace,monospace}
+label{display:block;color:var(--muted);font-size:11px;margin:12px 0 6px}
+input[type=range]{width:100%;accent-color:var(--yellow);cursor:pointer;height:22px;margin:0}
+.twobuttons{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
+.twobuttons button{font-size:12px}
+.primary{background:var(--yellow);color:#123138;border-color:var(--yellow);font-weight:650}
+.primary:hover{background:#ffda92}
+.separator{height:1px;background:var(--line)}
+.switches{display:flex;gap:6px}
+.switches button{flex:1;font-size:11px;padding:8px}
+.hint{font-size:10px;line-height:1.6;color:var(--muted);margin:8px 0 0;min-height:32px}
+.yard{margin-top:13px}
+.order{margin-top:12px;padding:12px;border:1px solid #59796055;background:#8ac9ab0b;border-radius:9px}
+.order small{color:var(--green);font-size:9px;letter-spacing:1.5px}
+.order p{font-size:12px;margin:6px 0 0;line-height:1.5}
+.full{width:100%;margin-top:10px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:auto}
+.stats div{text-align:center;border-top:1px solid var(--line);padding-top:12px}
+.stats b{display:block;font:21px ui-monospace,monospace;color:var(--yellow)}
+.stats small{font-size:8px;letter-spacing:1px;color:var(--muted)}
+.footnote{font-size:9px;color:#708d96;text-align:center;line-height:1.7}
+dialog{max-width:440px;width:calc(100% - 30px);background:var(--panel);color:var(--ink);border:1px solid #5d7d86;border-radius:16px;padding:25px;box-shadow:0 25px 100px #0008}
+dialog::backdrop{background:#06181bbb}
+dialog h2{margin-top:0}
+dialog p{line-height:1.7;color:#c2d2d0;font-size:13px}
+kbd{border:1px solid #58727a;padding:2px 5px;border-radius:4px;font-size:11px}
+.helpclose{float:right;min-height:32px;padding:4px 10px}
+noscript{display:block;padding:25px}
+@media(min-width:1500px){
+ main{grid-template-columns:minmax(0,1fr) 310px}
+ aside{padding:30px 26px}
+ .world{min-height:740px}
+}
+@media(max-width:850px){
+ header{height:73px;padding:0 16px}
+ .brand h1{font-size:18px}
+ .brand small{font-size:8px;letter-spacing:1.4px}
+ .live{display:none}
+ .headbuttons{gap:5px}
+ .headbuttons button{padding:8px 10px}
+ .world{min-height:500px}
+ main{grid-template-columns:minmax(0,1fr) 248px}
+ aside{padding:20px 14px;gap:16px}
+ .scene-title{left:18px;top:20px}
+ .scene-title h2{font-size:25px}
+ .view{top:98px;right:12px;flex-direction:column}
+ .legend{display:none}
+}
+@media(max-width:650px){
+ header{height:73px}
+ .badge{width:33px;height:36px;border-radius:8px}
+ .brand{gap:8px}
+ .brand h1{font-size:17px}
+ .headbuttons button{font-size:11px;padding:7px 9px}
+ main{display:flex;flex-direction:column}
+ .world{min-height:420px;height:53svh;max-height:620px}
+ .scene-title h2{font-size:26px}
+ .scene-title p{font-size:10px;max-width:220px}
+ .scene-title .eyebrow{font-size:9px}
+ .view{top:19px;flex-direction:row}
+ .view button{padding:6px 9px;min-height:34px}
+ .scene-footer{bottom:12px;left:13px;right:13px}
+ .legend{display:block;font-size:9px;padding:7px}
+ .worldstatus{font-size:9px;padding:8px}
+ .toast{bottom:52px;width:max-content}
+ aside{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:20px 16px;border-left:0;border-top:1px solid var(--line)}
+ .separator{display:none}
+ .stats,.footnote{grid-column:1/-1}
+ .speedbox strong{font-size:33px}
+ .trainname{font-size:12px}
+ .tag{font-size:8px}
+ .hint{min-height:46px}
+ .order{padding:10px}
+}
+@media(max-width:380px){
+ header{padding:0 10px;gap:8px}
+ .brand small{font-size:7px;letter-spacing:.8px}
+ .brand h1{font-size:15px}
+ .badge{width:28px}
+ .headbuttons button{padding:7px 8px}
+}
+@media(prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand">
+  <div class="badge" aria-hidden="true">
+   <svg width="27" height="29" viewBox="0 0 30 30" fill="none">
+    <path d="M7 19V6q0-3 3-3h10q3 0 3 3v13q0 4-4 4h-8q-4 0-4-4Z" stroke="currentColor" stroke-width="2"/>
+    <path d="M10 7h10v6H10z" fill="currentColor"/>
+    <circle cx="11" cy="18" r="1.5" fill="currentColor"/>
+    <circle cx="19" cy="18" r="1.5" fill="currentColor"/>
+    <path d="m10 23-4 5m14-5 4 5M8 26h14" stroke="currentColor" stroke-width="2"/>
+   </svg>
+  </div>
+  <div><h1>Little Junction</h1><small>SMALL TRAINS. BIG DAY.</small></div>
+ </div>
+ <div class="headbuttons">
+  <span class="live"><span class="dot"></span>YARD IS ALIVE</span>
+  <button id="night" aria-pressed="false">☾ Night</button>
+  <button id="sound" aria-pressed="false">♪ Sound</button>
+  <button id="help" class="help" aria-label="Open instructions">?</button>
+ </div>
+</header>
+
+<main>
+ <section class="world" aria-label="Interactive model railway">
+  <canvas id="scene" tabindex="0" aria-label="Animated voxel railway on a wooden table. Drag to orbit, pinch or scroll to zoom. Train controls follow below."></canvas>
+  <div class="scene-title" id="sceneTitle">
+   <div class="eyebrow">HO INSPIRED · 1:87 · TABLE NO. 01</div>
+   <h2>A little world,<br>always in motion.</h2>
+   <p>You're the station master. Make yourself at home.</p>
+  </div>
+  <div class="view">
+   <button id="zoomOut" aria-label="Zoom out">−</button>
+   <button id="fit" aria-label="Reset camera">⌂</button>
+   <button id="zoomIn" aria-label="Zoom in">+</button>
+  </div>
+  <div class="toast" role="status" id="toast"></div>
+  <div class="scene-footer">
+   <div class="legend">DRAG TO ORBIT <b>·</b> SCROLL TO ZOOM</div>
+   <div class="worldstatus"><i id="gateDot"></i><span id="gateLabel">CROSSING CLEAR</span></div>
+  </div>
+ </section>
+
+ <aside aria-label="Railway controls">
+  <section>
+   <h2>01 / Engine room</h2>
+   <div class="row">
+    <div class="trainname"><span>●</span> The Juniper Express</div>
+    <span class="tag" id="expressState">RUNNING</span>
+   </div>
+   <div class="speedbox">
+    <strong id="speed">00</strong><small>scale km/h</small>
+    <span class="mini" id="powerReadout">65% POWER</span>
+   </div>
+   <label for="throttle">Engine throttle</label>
+   <input id="throttle" type="range" min="0" max="100" value="65">
+   <div class="twobuttons">
+    <button id="pause" class="primary" aria-pressed="false">Ⅱ Pause yard</button>
+    <button id="whistle">♬ Whistle</button>
+   </div>
+   <label>Main line turnout</label>
+   <div class="switches">
+    <button id="platform" aria-pressed="true">Platform</button>
+    <button id="bypass" aria-pressed="false">Bypass</button>
+   </div>
+   <p class="hint" id="routeHint">Platform route. The express stops for passengers.</p>
+  </section>
+
+  <div class="separator"></div>
+
+  <section>
+   <h2>02 / Freight dispatch</h2>
+   <div class="row">
+    <div class="trainname"><span style="color:var(--green)">●</span> Yard shunter</div>
+    <span class="tag" id="freightState">OUTBOUND</span>
+   </div>
+   <label>Set the next siding</label>
+   <div class="switches yard">
+    <button data-siding="0" aria-pressed="true">01</button>
+    <button data-siding="1" aria-pressed="false">02</button>
+    <button data-siding="2" aria-pressed="false">03</button>
+   </div>
+   <p class="hint" id="sidingHint">Points set to siding 01. Switches lock under trains.</p>
+   <div class="order">
+    <small>THE NEXT LITTLE JOB</small>
+    <p id="orderText">Deliver a load to siding 02.</p>
+   </div>
+   <button class="full" id="dispatch">Send freight / skip dwell →</button>
+  </section>
+
+  <div class="stats">
+   <div><b id="laps">0</b><small>LOOPS</small></div>
+   <div><b id="loads">0</b><small>LOADS</small></div>
+   <div><b id="jobs">0</b><small>JOBS DONE</small></div>
+  </div>
+  <div class="footnote">Space: pause · H: whistle · N: night<br>1 / 2 / 3: siding · ? : how to play</div>
+ </aside>
+</main>
+
+<dialog id="instructions">
+ <button class="helpclose" id="closeHelp" aria-label="Close instructions">×</button>
+ <h2>Your very small railway.</h2>
+ <p>Drag the table to orbit. Scroll or pinch to zoom. Tap <b>⌂</b> to return to the best view.</p>
+ <p>The express accelerates gently, slows into curves and stops at the platform. Choose <b>Bypass</b> to skip the station. Route changes wait until the entire train is safely clear.</p>
+ <p>Your shunter loads at a siding, backs into the headshunt and goes out again. Choose <b>01, 02 or 03</b> to complete the next little job. New points apply when the train clears the junction.</p>
+ <p>Crossing gates and road traffic work automatically. Try night mode, blow the whistle, or click a tree for a tiny surprise.</p>
+ <p><kbd>Space</kbd> pause · <kbd>H</kbd> whistle · <kbd>N</kbd> night · <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> sidings</p>
+ <button id="save" class="primary full">Download this HTML</button>
+</dialog>
+<noscript>This railway needs JavaScript enabled in your browser.</noscript>
+
+<script>
+'use strict';
+
+const $=id=>document.getElementById(id);
+const canvas=$('scene'),ctx=canvas.getContext('2d');
+const TAU=Math.PI*2;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const mix=(a,b,t)=>a+(b-a)*t;
+
+let seed=487;
+function random(){
+ seed=(seed*1664525+1013904223)>>>0;
+ return seed/4294967296;
+}
+
+/* Arc-length tracks keep each wagon on the rails. */
+class Track{
+ constructor(closed=false){
+  this.p=[];
+  this.L=0;
+  this.closed=closed;
+ }
+ add(x,z){
+  const last=this.p[this.p.length-1];
+  if(last)this.L+=Math.hypot(x-last.x,z-last.z);
+  this.p.push({x,z,s:this.L});
+  return this;
+ }
+ line(x,z){return this.add(x,z)}
+ curve(cx,cz,dx,dz,x,z){
+  const a=this.p[this.p.length-1];
+  for(let i=1;i<=50;i++){
+   const t=i/50,u=1-t;
+   this.add(
+    u*u*u*a.x+3*u*u*t*cx+3*u*t*t*dx+t*t*t*x,
+    u*u*u*a.z+3*u*u*t*cz+3*u*t*t*dz+t*t*t*z
+   );
+  }
+  return this;
+ }
+ arc(cx,cz,r,a,b){
+  for(let i=1;i<=100;i++){
+   const t=mix(a,b,i/100);
+   this.add(cx+Math.cos(t)*r,cz+Math.sin(t)*r);
+  }
+  return this;
+ }
+ point(s){
+  s=this.closed?((s%this.L)+this.L)%this.L:clamp(s,0,this.L);
+  let l=0,r=this.p.length-1;
+  while(l+1<r){
+   const m=(l+r)>>1;
+   if(this.p[m].s<s)l=m;
+   else r=m;
+  }
+  const a=this.p[l],b=this.p[r],t=(s-a.s)/(b.s-a.s||1);
+  return{x:mix(a.x,b.x,t),z:mix(a.z,b.z,t)};
+ }
+ pose(s){
+  const p=this.point(s),a=this.point(s-.38),b=this.point(s+.38);
+  return{...p,a:Math.atan2(b.z-a.z,b.x-a.x)};
+ }
+ nearest(x,z){
+  let best=Infinity,s=0;
+  for(let d=0;d<this.L;d+=.06){
+   const p=this.point(d),v=Math.hypot(x-p.x,z-p.z);
+   if(v<best){best=v;s=d}
+  }
+  return s;
+ }
+}
+
+function mainTrack(platform){
+ const t=new Track(true)
+  .add(-10,-7).line(10,-7)
+  .arc(10,0,7,-Math.PI/2,Math.PI/2);
+ if(!platform){
+  t.line(7,7).curve(5,7,5,9,3,9)
+   .line(-3,9).curve(-5,9,-5,7,-7,7);
+ }
+ t.line(-10,7).arc(-10,0,7,Math.PI/2,3*Math.PI/2);
+ return t;
+}
+
+const mainTracks=[mainTrack(true),mainTrack(false)];
+const sidings=[-3.5,-.4,2.7];
+const yardTracks=sidings.map(z=>
+ new Track().add(-11,-3.5).line(-4,-3.5)
+ .curve(-1.5,-3.5,-1.5,z,1.5,z).line(10.8,z)
+);
+const crossingPositions=mainTracks.map(p=>
+ [-6.325,6.325].map(z=>p.nearest(-13,z))
+);
+const stopPosition=mainTracks[0].nearest(-2,7);
+
+const mainTrain={
+ s:12,v:2.2,route:0,next:0,dwell:0,served:false,laps:0
+};
+const freight={
+ s:9,v:1.3,route:0,next:0,dir:1,dwell:0,loads:0,jobs:0,job:1
+};
+
+let paused=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let night=false,nightMix=0,power=.65,time=0;
+let gate=0,gateDown=false,particles=[],steam=0,toastTime=0;
+
+const cars=[
+ {z:-11,dir:1,x:-13.57,color:'#eac369',v:0},
+ {z:3,dir:-1,x:-12.43,color:'#7daca5',v:1.3}
+];
+
+let audioContext=null,rumble=null,rumbleGain=null,soundOn=false;
+
+function toast(msg){
+ $('toast').textContent=msg;
+ $('toast').classList.add('show');
+ toastTime=4;
+}
+
+function note(freq,duration=.2,volume=.045,type='sine',delay=0){
+ if(!soundOn||!audioContext)return;
+ const o=audioContext.createOscillator();
+ const g=audioContext.createGain();
+ const t=audioContext.currentTime+delay;
+ o.type=type;
+ o.frequency.setValueAtTime(freq,t);
+ g.gain.setValueAtTime(0,t);
+ g.gain.linearRampToValueAtTime(volume,t+.025);
+ g.gain.exponentialRampToValueAtTime(.001,t+duration);
+ o.connect(g);
+ g.connect(audioContext.destination);
+ o.start(t);
+ o.stop(t+duration+.03);
+}
+
+function whistle(){
+ const p=mainTracks[mainTrain.route].pose(mainTrain.s);
+ for(let i=0;i<10;i++)puff(p.x,p.z,2,0);
+ if(soundOn){
+  note(440,.9,.06,'triangle');
+  note(554,.85,.035,'triangle');
+  note(660,.8,.025,'sine');
+ }
+ toast(soundOn?'All aboard!':'Toot toot! Enable Sound to hear the whistle.');
+}
+
+function puff(x,z,y,kind){
+ particles.push({
+  x,z,y,
+  vx:(random()-.5)*.35,
+  vz:(random()-.5)*.3,
+  vy:kind===1?2+random()*3:.65+random()*.5,
+  life:kind===1?2:3,
+  max:kind===1?2:3,
+  size:kind===1?.13:.28+random()*.2,
+  kind,
+  color:['#ffc66b','#db7864','#9dcabb','#e6e9c9'][Math.floor(random()*4)]
+ });
+}
+
+function setRoute(n){
+ mainTrain.next=n;
+ sync();
+ toast('Express route requested: '+(n===0?'platform.':'bypass.'));
+}
+function setSiding(n){
+ freight.next=n;
+ sync();
+ toast('Siding 0'+(n+1)+' queued. Points move when the train is clear.');
+}
+
+/* Independent main line and yard circuits prevent train conflicts. */
+function update(dt){
+ if(!paused){
+  time+=dt;
+  const m=mainTrain;
+
+  // Both main routes share this clear stretch of straight track.
+  if(m.route!==m.next&&m.s>9&&m.s<18.8){
+   m.route=m.next;
+   toast('Main line points set. '+(m.route?'Bypass clear.':'Platform clear.'));
+  }
+
+  const path=mainTracks[m.route],pos=path.point(m.s);
+  let target=power*5.3;
+  if(Math.abs(pos.x)>10)target=Math.min(target,2.15);
+
+  let stopDist=Infinity;
+  if(m.route===0&&!m.served&&m.s<=stopPosition){
+   stopDist=stopPosition-m.s;
+  }
+
+  if(m.dwell>0){
+   m.dwell=Math.max(0,m.dwell-dt);
+   target=0;
+   if(m.dwell<=0){
+    m.served=true;
+    toast('Doors closed. Next stop: another lap.');
+    note(650,.2,.035);
+    note(870,.25,.035,'sine',.2);
+   }
+  }else if(stopDist<8){
+   target=Math.min(target,Math.sqrt(2*1.3*Math.max(0,stopDist)));
+  }
+
+  m.v+=clamp(target-m.v,-1.4*dt,.75*dt);
+  let ds=m.v*dt;
+
+  if(!m.served&&!m.dwell&&stopDist<.05&&power>0){
+   m.s=stopPosition;
+   m.v=0;
+   m.dwell=4.2;
+   ds=0;
+   toast('Juniper Express: passengers boarding.');
+  }else if(ds>stopDist){
+   ds=stopDist;
+   m.v=0;
+  }
+
+  m.s+=ds;
+  if(m.s>=path.L){
+   m.s-=path.L;
+   m.laps++;
+   m.served=false;
+  }
+
+  const f=freight;
+  const wasDwelling=f.dwell>0;
+  const fp=yardTracks[f.route];
+  const end=f.dir>0?fp.L-1.25:5.5;
+  const remain=Math.abs(end-f.s);
+  const fv=f.dwell>0?0:Math.min(2.2,Math.sqrt(2*1.4*remain));
+
+  if(f.dwell>0){
+   f.dwell-=dt;
+   if(f.dwell<=0)f.dir*=-1;
+  }
+
+  f.v+=clamp(fv-f.v,-1.5*dt,1.0*dt);
+
+  if(!wasDwelling){
+   const step=Math.min(remain,f.v*dt);
+   f.s+=step*f.dir;
+
+   if(remain<.035){
+    f.s=end;
+    f.v=0;
+    f.dwell=f.dir>0?3.5:1.8;
+
+    if(f.dir>0){
+     f.loads++;
+     if(f.route===f.job){
+      f.jobs++;
+      f.job=(f.job+1+(random()>.5?1:0))%3;
+      for(let i=0;i<25;i++)puff(9,sidings[f.route],1.7,1);
+      toast('Job complete! One tiny delivery, one big win.');
+      [520,650,780,1040].forEach((hz,i)=>
+       note(hz,.2,.035,'sine',i*.11)
+      );
+     }
+    }else{
+     // The complete consist is behind the junction.
+     f.route=f.next;
+     toast('Yard points set to siding 0'+(f.route+1)+'.');
+    }
+   }
+  }
+
+  const cps=crossingPositions[m.route];
+  gateDown=cps.some(s=>
+   ((s-m.s+path.L)%path.L)<Math.max(5.5,m.v*2.6+1.5)||
+   ((m.s-s+path.L)%path.L)<8.8
+  );
+  gate+=clamp((gateDown?1:0)-gate,-dt*.8,dt*.9);
+
+  if(gateDown&&Math.floor(time*2)!==Math.floor((time-dt)*2)){
+   note(940,.09,.015);
+  }
+
+  for(const car of cars){
+   let blocked=false;
+   if(gateDown||gate>.05){
+    for(const z of [-6.325,6.325]){
+     const stop=z-car.dir*2.0;
+     const gap=(stop-car.z)*car.dir;
+     if(gap>=-.02&&gap<2.6){
+      blocked=true;
+      car.v=Math.min(car.v,Math.sqrt(2*2.5*Math.max(0,gap)));
+      if(gap<.035){
+       car.z=stop;
+       car.v=0;
+      }
+     }
