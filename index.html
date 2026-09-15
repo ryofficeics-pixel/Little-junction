@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0e2028">
-<title>Little Junction — Tabletop Railway</title>
+<title>Little Junction — Highlands Railway</title>
 <style>
 :root{color-scheme:dark;--bg:#0e2028;--panel:#162c35;--line:#2b424a;--ink:#ecede3;--muted:#93a8ae;--yellow:#ffc66b;--green:#8ac9ab}
 *{box-sizing:border-box}
@@ -133,6 +133,23 @@ noscript{display:block;padding:25px}
  .headbuttons button{padding:7px 8px}
 }
 @media(prefers-reduced-motion:reduce){.toast{transition:none}}
+
+/* The driver sits behind a windshield; the world remains true perspective 3D. */
+.view{z-index:8}.view button[aria-pressed=true]{background:#ffcf7e;border-color:#c6a168}.view #cabToggle{font-size:12px;font-weight:650;min-width:108px}
+.scene-title{z-index:2}.scene-title p{max-width:240px}.toast{z-index:10}.scene-footer{z-index:8}.sounding{box-shadow:0 0 0 3px #e5b35b80}
+.cab-frame{position:absolute;inset:0;pointer-events:none;z-index:4;border:15px solid #36554f;border-bottom:0;box-shadow:inset 0 0 0 3px #8d9d82,inset 0 0 40px #142a2933}
+.cab-frame[hidden]{display:none}.cab-roof{position:absolute;left:-15px;right:-15px;top:-15px;height:64px;background:linear-gradient(#263f3c,#4a665b);border-bottom:6px solid #bdab79;color:#d2d5b6;font:9px ui-monospace,monospace;letter-spacing:2px;padding:23px 25px}
+.cab-post{position:absolute;top:48px;bottom:110px;width:9px;background:linear-gradient(90deg,#456257,#a3ab8b,#38574d)}.cab-post.left{left:21%}.cab-post.right{right:21%}
+.cab-map{position:absolute;top:66px;left:12px;width:128px;height:80px;background:#203b36dc;border:1px solid #a6b69770;border-radius:7px;overflow:hidden}.cab-map canvas{position:static;width:128px;height:80px;cursor:default;touch-action:auto}
+.cab-tip{position:absolute;top:71px;right:10px;color:#d4e4c8;font:8px ui-monospace,monospace;letter-spacing:1px;background:#25433aaa;padding:7px;border-radius:4px}
+.cab-dash{position:absolute;left:-15px;right:-15px;bottom:0;height:136px;border-top:9px solid #bcaa78;background:linear-gradient(#4d685c,#213d36);display:flex;align-items:center;justify-content:center;gap:27px;padding:10px 24px;box-shadow:0 -9px 25px #17282040}
+.dial{position:relative;width:103px;height:103px;border:5px solid #cab883;border-radius:50%;background:#193830;box-shadow:0 0 0 3px #233d35,inset 0 0 12px #081c1899;flex-shrink:0}.dial-ticks{position:absolute;inset:4px;border:2px dotted #b5c49c;border-radius:50%}.needle{position:absolute;left:calc(50% - 1px);top:11px;width:2px;height:35px;background:#edb76b;transform-origin:50% 35px;transform:rotate(-120deg);transition:transform .12s linear}.dial-center{position:absolute;left:calc(50% - 4px);top:42px;width:8px;height:8px;border-radius:50%;background:#e7c380}.dial strong{position:absolute;top:51px;width:100%;text-align:center;font:22px ui-monospace,monospace;color:#ebdfb9}.dial small{position:absolute;top:77px;width:100%;text-align:center;font:7px ui-monospace,monospace;letter-spacing:1px;color:#aebf9e}
+.cab-readouts{display:flex;flex-direction:column;gap:8px;color:#dddfbe;min-width:170px}.cab-readouts small{font:8px ui-monospace,monospace;letter-spacing:1.4px;color:#b1c49f}.cab-readouts b{font:12px ui-monospace,monospace;letter-spacing:.3px}.cab-readouts span{font:9px ui-monospace,monospace;color:#b1c49f}.cab-readouts strong{color:#ecd8a3;font-size:13px;margin-left:6px}
+.cab-horn{pointer-events:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;width:67px;height:76px;background:#d8b471;color:#203b31;border:3px solid #eed298;box-shadow:0 5px 0 #8b723f;font-size:20px;gap:3px}.cab-horn span{font:10px ui-monospace,monospace;font-weight:bold;letter-spacing:1px}.cab-horn small{font:8px ui-monospace,monospace;opacity:.65}.cab-horn:hover{background:#e7c589}.in-cab .scene-footer{display:none}.in-cab .toast{bottom:149px}.in-cab .view{top:10px;right:11px}.in-cab .view button{background:#cccfb1e8}.in-cab canvas#scene{cursor:crosshair}
+@media(max-width:850px){.view{top:18px;flex-direction:row}.scene-title{top:80px}.scene-title h2{font-size:24px}.cab-roof span{display:none}.cab-dash{gap:15px;padding:10px 15px}.cab-readouts{min-width:135px}.cab-readouts b{font-size:10px}.cab-tip{font-size:7px;letter-spacing:0}.cab-map{width:104px;height:65px}.cab-map canvas{width:104px;height:65px}}
+@media(max-width:650px){.world{min-height:470px;height:64svh;max-height:680px}.view{top:15px;right:13px}.view #cabToggle{min-width:102px;font-size:11px}.scene-title{top:72px}.scene-title h2{font-size:23px}.scene-title p{max-width:225px}.scene-footer .legend{font-size:8px}.headbuttons #sound{font-size:10px;padding:7px}.cab-frame{border-width:10px}.cab-roof{top:-10px;left:-10px;right:-10px}.cab-post{top:49px;bottom:122px}.cab-dash{height:128px;left:-10px;right:-10px;gap:12px;padding:8px 12px}.dial{width:89px;height:89px}.dial strong{top:44px;font-size:20px}.dial small{top:66px}.needle{height:29px;transform-origin:50% 29px}.dial-center{top:36px}.cab-readouts{min-width:126px;gap:8px}.cab-readouts small{font-size:7px;letter-spacing:.4px}.cab-readouts b{font-size:9px}.cab-horn{width:53px;height:66px;font-size:17px;padding:5px;flex-shrink:0}.cab-horn span{font-size:8px}.cab-tip{top:62px;font-size:6px}.cab-map{top:62px;left:6px}.in-cab .view{top:8px;right:9px}.in-cab .toast{bottom:143px}.cab-roof{height:61px}.cab-readouts span{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.needle{transition:none}}
+
 </style>
 </head>
 <body>
@@ -152,27 +169,40 @@ noscript{display:block;padding:25px}
  <div class="headbuttons">
   <span class="live"><span class="dot"></span>YARD IS ALIVE</span>
   <button id="night" aria-pressed="false">☾ Night</button>
-  <button id="sound" aria-pressed="false">♪ Sound</button>
+  <button id="sound" aria-pressed="false">♪ Ambience</button>
   <button id="help" class="help" aria-label="Open instructions">?</button>
  </div>
 </header>
 
 <main>
  <section class="world" aria-label="Interactive model railway">
-  <canvas id="scene" tabindex="0" aria-label="Animated voxel railway on a wooden table. Drag to orbit, pinch or scroll to zoom. Train controls follow below."></canvas>
+  <canvas id="scene" tabindex="0" aria-label="Expanded voxel railway with hills, bridges and a tunnel. Drag to orbit or look around the cab. Train controls follow below."></canvas>
   <div class="scene-title" id="sceneTitle">
-   <div class="eyebrow">HO INSPIRED · 1:87 · TABLE NO. 01</div>
-   <h2>A little world,<br>always in motion.</h2>
-   <p>You're the station master. Make yourself at home.</p>
+   <div class="eyebrow">HO INSPIRED · 7× MORE WORLD</div>
+   <h2>A much bigger<br>little world.</h2>
+   <p>From village platforms to the Pinecrest highlands.</p>
   </div>
   <div class="view">
+   <button id="cabToggle" aria-pressed="false">▣ Cab view</button>
    <button id="zoomOut" aria-label="Zoom out">−</button>
    <button id="fit" aria-label="Reset camera">⌂</button>
    <button id="zoomIn" aria-label="Zoom in">+</button>
   </div>
+
+  <div id="cabFrame" class="cab-frame" hidden>
+   <div class="cab-roof"><span>JUNIPER RAIL · CAB 01</span></div>
+   <div class="cab-post left"></div><div class="cab-post right"></div>
+   <div class="cab-map"><canvas id="minimap" width="160" height="100" aria-label="Route map showing locomotive position"></canvas></div>
+   <div class="cab-tip">DRAG TO LOOK · ⌂ LOOK AHEAD</div>
+   <div class="cab-dash">
+    <div class="dial"><div class="dial-ticks"></div><div class="needle" id="needle"></div><div class="dial-center"></div><strong id="cabSpeed">00</strong><small>KM/H</small></div>
+    <div class="cab-readouts"><small id="cabStatus">JUNIPER EXPRESS</small><b id="cabLocation">LITTLE JUNCTION</b><span>GRADE <strong id="cabGrade">+0.0%</strong></span></div>
+    <button id="cabHorn" class="cab-horn" aria-label="Sound train horn">♫<span>HORN</span><small>H</small></button>
+   </div>
+  </div>
   <div class="toast" role="status" id="toast"></div>
   <div class="scene-footer">
-   <div class="legend">DRAG TO ORBIT <b>·</b> SCROLL TO ZOOM</div>
+   <div class="legend" id="cameraHint">DRAG TO ORBIT · PINCH TO ZOOM</div>
    <div class="worldstatus"><i id="gateDot"></i><span id="gateLabel">CROSSING CLEAR</span></div>
   </div>
  </section>
@@ -192,7 +222,7 @@ noscript{display:block;padding:25px}
    <input id="throttle" type="range" min="0" max="100" value="65">
    <div class="twobuttons">
     <button id="pause" class="primary" aria-pressed="false">Ⅱ Pause yard</button>
-    <button id="whistle">♬ Whistle</button>
+    <button id="horn">♫ Train horn</button>
    </div>
    <label>Main line turnout</label>
    <div class="switches">
@@ -229,751 +259,284 @@ noscript{display:block;padding:25px}
    <div><b id="loads">0</b><small>LOADS</small></div>
    <div><b id="jobs">0</b><small>JOBS DONE</small></div>
   </div>
-  <div class="footnote">Space: pause · H: whistle · N: night<br>1 / 2 / 3: siding · ? : how to play</div>
+  <div class="footnote">Space: pause · H: horn · C: cab view<br>N: night · 1 / 2 / 3: siding · ? : help</div>
  </aside>
 </main>
 
 <dialog id="instructions">
  <button class="helpclose" id="closeHelp" aria-label="Close instructions">×</button>
- <h2>Your very small railway.</h2>
- <p>Drag the table to orbit. Scroll or pinch to zoom. Tap <b>⌂</b> to return to the best view.</p>
+ <h2>Your much bigger railway.</h2>
+ <p>The wooden layout has <b>7 times the original area</b>. Explore forest bends, two river bridges, mountain grades and a real tunnel. Drag to orbit, scroll or pinch to zoom, and tap <b>⌂</b> to reset.</p>
+ <p>Press <b>Cab view</b> or <kbd>C</kbd> to sit inside the Juniper Express. Drag to look around; <b>⌂</b> looks ahead. The camera follows curves and climbs with the locomotive. Press the same view button to return to the table.</p>
  <p>The express accelerates gently, slows into curves and stops at the platform. Choose <b>Bypass</b> to skip the station. Route changes wait until the entire train is safely clear.</p>
  <p>Your shunter loads at a siding, backs into the headshunt and goes out again. Choose <b>01, 02 or 03</b> to complete the next little job. New points apply when the train clears the junction.</p>
- <p>Crossing gates and road traffic work automatically. Try night mode, blow the whistle, or click a tree for a tiny surprise.</p>
- <p><kbd>Space</kbd> pause · <kbd>H</kbd> whistle · <kbd>N</kbd> night · <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> sidings</p>
+ <p>Crossing gates and road traffic work automatically. Try night mode, sound the train horn, or click a tree for a tiny surprise.</p>
+ <p><kbd>Space</kbd> pause · <kbd>H</kbd> horn · <kbd>C</kbd> cab view · <kbd>N</kbd> night · <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> sidings</p>
+ <p>The five-tone air horn plays when you press it. <b>Ambience</b> controls the engine rumble and crossing bells.</p>
  <button id="save" class="primary full">Download this HTML</button>
 </dialog>
 <noscript>This railway needs JavaScript enabled in your browser.</noscript>
 
 <script>
 'use strict';
+const $=id=>document.getElementById(id),canvas=$('scene');
+const TAU=Math.PI*2,clamp=(n,a,b)=>Math.max(a,Math.min(b,n)),mix=(a,b,t)=>a+(b-a)*t;
+const smooth=t=>{t=clamp(t,0,1);return t*t*(3-2*t)},angleDiff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b));
+let seed=487;function random(){seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296}
+const vadd=(a,b)=>a.map((n,i)=>n+b[i]),vsub=(a,b)=>a.map((n,i)=>n-b[i]),vscale=(a,b)=>a.map(n=>n*b);
+const dot=(a,b)=>a.reduce((n,x,i)=>n+x*b[i],0),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const norm=v=>vscale(v,1/(Math.hypot(...v)||1));
+const TABLE={width:112,depth:68.25},ROAD=-43.5;
 
-const $=id=>document.getElementById(id);
-const canvas=$('scene'),ctx=canvas.getContext('2d');
-const TAU=Math.PI*2;
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-const mix=(a,b,t)=>a+(b-a)*t;
-
-let seed=487;
-function random(){
- seed=(seed*1664525+1013904223)>>>0;
- return seed/4294967296;
-}
-
-/* Arc-length tracks keep each wagon on the rails. */
+// Every wagon samples the same 3D arc-length path, including pitch on grades.
 class Track{
- constructor(closed=false){
-  this.p=[];
-  this.L=0;
-  this.closed=closed;
- }
- add(x,z){
-  const last=this.p[this.p.length-1];
-  if(last)this.L+=Math.hypot(x-last.x,z-last.z);
-  this.p.push({x,z,s:this.L});
-  return this;
- }
- line(x,z){return this.add(x,z)}
- curve(cx,cz,dx,dz,x,z){
-  const a=this.p[this.p.length-1];
-  for(let i=1;i<=50;i++){
-   const t=i/50,u=1-t;
-   this.add(
-    u*u*u*a.x+3*u*u*t*cx+3*u*t*t*dx+t*t*t*x,
-    u*u*u*a.z+3*u*u*t*cz+3*u*t*t*dz+t*t*t*z
-   );
-  }
-  return this;
- }
- arc(cx,cz,r,a,b){
-  for(let i=1;i<=100;i++){
-   const t=mix(a,b,i/100);
-   this.add(cx+Math.cos(t)*r,cz+Math.sin(t)*r);
-  }
-  return this;
- }
- point(s){
-  s=this.closed?((s%this.L)+this.L)%this.L:clamp(s,0,this.L);
-  let l=0,r=this.p.length-1;
-  while(l+1<r){
-   const m=(l+r)>>1;
-   if(this.p[m].s<s)l=m;
-   else r=m;
-  }
-  const a=this.p[l],b=this.p[r],t=(s-a.s)/(b.s-a.s||1);
-  return{x:mix(a.x,b.x,t),z:mix(a.z,b.z,t)};
- }
- pose(s){
-  const p=this.point(s),a=this.point(s-.38),b=this.point(s+.38);
-  return{...p,a:Math.atan2(b.z-a.z,b.x-a.x)};
- }
- nearest(x,z){
-  let best=Infinity,s=0;
-  for(let d=0;d<this.L;d+=.06){
-   const p=this.point(d),v=Math.hypot(x-p.x,z-p.z);
-   if(v<best){best=v;s=d}
-  }
-  return s;
- }
+ constructor(closed=false){this.p=[];this.L=0;this.closed=closed;this.tunnels=[]}
+ add(x,z,y=0){const last=this.p.at(-1);if(last)this.L+=Math.hypot(x-last.x,y-last.y,z-last.z);this.p.push({x,y,z,s:this.L});return this}
+ line(x,z,y=this.p.at(-1).y){const a=this.p.at(-1),count=Math.ceil(Math.hypot(x-a.x,z-a.z)*3);for(let i=1;i<=count;i++){const t=i/count;this.add(mix(a.x,x,t),mix(a.z,z,t),mix(a.y,y,smooth(t)))}return this}
+ curve(cx,cz,dx,dz,x,z,y=this.p.at(-1).y){const a=this.p.at(-1);for(let i=1;i<=100;i++){const t=i/100,u=1-t;this.add(u*u*u*a.x+3*u*u*t*cx+3*u*t*t*dx+t*t*t*x,u*u*u*a.z+3*u*u*t*cz+3*u*t*t*dz+t*t*t*z,mix(a.y,y,smooth(t)))}return this}
+ point(s){s=this.closed?((s%this.L)+this.L)%this.L:clamp(s,0,this.L);let l=0,r=this.p.length-1;while(l+1<r){const m=(l+r)>>1;if(this.p[m].s<s)l=m;else r=m}const a=this.p[l],b=this.p[r],t=(s-a.s)/(b.s-a.s||1);return{x:mix(a.x,b.x,t),y:mix(a.y,b.y,t),z:mix(a.z,b.z,t)}}
+ pose(s){const p=this.point(s),a=this.point(s-.35),b=this.point(s+.35),flat=Math.hypot(b.x-a.x,b.z-a.z);return{...p,a:Math.atan2(b.z-a.z,b.x-a.x),pitch:Math.atan2(b.y-a.y,flat),grade:(b.y-a.y)/(flat||1)}}
+ nearest(x,z){let best=Infinity,s=0;for(let d=0;d<this.L;d+=.12){const p=this.point(d),v=Math.hypot(p.x-x,p.z-z);if(v<best){best=v;s=d}}return s}
+ inTunnel(s){s=((s%this.L)+this.L)%this.L;return this.tunnels.some(([a,b])=>s>=a&&s<=b)}
 }
-
 function mainTrack(platform){
- const t=new Track(true)
-  .add(-10,-7).line(10,-7)
-  .arc(10,0,7,-Math.PI/2,Math.PI/2);
- if(!platform){
-  t.line(7,7).curve(5,7,5,9,3,9)
-   .line(-3,9).curve(-5,9,-5,7,-7,7);
- }
- t.line(-10,7).arc(-10,0,7,Math.PI/2,3*Math.PI/2);
+ const t=new Track(true).add(-42,-19)
+ .curve(-35,-25,-23,-25,-15,-27,.65)
+ .curve(-8,-30,-8,-22,4,-23,1.65)
+ .curve(11,-24,13,-27,25,-24,2.9)
+ .curve(38,-21,44,-29,47,-20,3.65)
+ .curve(53,-7,39,-12,33,-8,4.4)
+ .curve(26,-4,26,2,32,2,4.4);
+ const mouth=t.L;t.line(42,2,4.4);t.tunnels.push([mouth,t.L]);
+ t.curve(49,2,50,12,46,19,4.0)
+ .curve(39,28,25,23,15,24,2.8)
+ .curve(6,25,7,17,-8,17,.65)
+ .curve(-12,17,-13,17,-17,17,0);
+ t.stationEntry=t.L;
+ if(platform)t.line(-39,17);else t.curve(-22,17,-20,21,-25,21).line(-31,21).curve(-36,21,-34,17,-39,17);
+ t.stationExit=t.L;
+ t.curve(-49,17,-52,9,-49,0).curve(-46,-7,-49,-13,-42,-19);
+ // Spread the climb and descent over distance, not Bezier time. This avoids
+ // sudden steep pitches at the slower-moving ends of a tight curve.
+ const tunnelIndices=t.tunnels[0].map(s=>t.p.findIndex(p=>p.s===s)),stationIndex=t.p.findIndex(p=>p.s===t.stationEntry),exitIndex=t.p.findIndex(p=>p.s===t.stationExit);
+ const flat=[0];for(let i=1;i<t.p.length;i++)flat[i]=flat[i-1]+Math.hypot(t.p[i].x-t.p[i-1].x,t.p[i].z-t.p[i-1].z);
+ const up=flat[tunnelIndices[0]],down=flat[tunnelIndices[1]],bottom=flat[stationIndex];t.L=0;
+ for(let i=0;i<t.p.length;i++){const p=t.p[i],s=flat[i];p.y=s<up?3.2*smooth(s/up):s<down?3.2:s<bottom?3.2*(1-smooth((s-down)/(bottom-down))):0;if(i){const a=t.p[i-1];t.L+=Math.hypot(p.x-a.x,p.y-a.y,p.z-a.z)}p.s=t.L}
+ t.tunnels=[tunnelIndices.map(i=>t.p[i].s)];t.stationEntry=t.p[stationIndex].s;t.stationExit=t.p[exitIndex].s;
  return t;
 }
+const mainTracks=[mainTrack(true),mainTrack(false)],sidings=[-6,-2,2];
+const yardTracks=sidings.map(z=>new Track().add(-42,-6).line(-31,-6).curve(-26,-6,-26,z,-22,z).line(-7,z));
+const bypassTrack=new Track().add(-17,17).curve(-22,17,-20,21,-25,21).line(-31,21).curve(-36,21,-34,17,-39,17);
+const yardBranches=sidings.slice(1).map(z=>new Track().add(-31,-6).curve(-26,-6,-26,z,-22,z).line(-7,z));
+const yardEntry=new Track().add(-47.5,-9).curve(-48,-6,-46,-6,-42,-6);
+const stopPosition=mainTracks[0].nearest(-29,17);
+function roadCrossings(t){const out=[];for(let i=1;i<t.p.length;i++){const a=t.p[i-1],b=t.p[i];if((a.x-ROAD)*(b.x-ROAD)<0){const f=(ROAD-a.x)/(b.x-a.x);out.push({s:mix(a.s,b.s,f),z:mix(a.z,b.z,f)})}}return out}
+const crossingPositions=mainTracks.map(roadCrossings);
+const mainTrain={s:mainTracks[0].stationEntry-7,v:2.2,route:0,next:0,dwell:0,served:false,laps:0};
+const freight={s:12,v:1.3,route:0,next:0,dir:1,dwell:0,loads:0,jobs:0,job:1};
+const cars=[{z:-30,dir:1,x:ROAD-.55,color:'#e5b962',v:1.6},{z:6,dir:-1,x:ROAD+.55,color:'#75a8a1',v:1.6},{z:-10,dir:1,x:ROAD-.55,color:'#c16f52',v:1.6}];
+let paused=matchMedia('(prefers-reduced-motion: reduce)').matches,night=false,nightMix=0,power=.65,time=0,gate=0,gateDown=false,particles=[],steam=0,toastTime=0,hornFlash=0;
+let cab=false,yaw=.36,elevation=.74,zoom=1,lookYaw=0,lookPitch=0,cabFov=74,W=1,H=1,renderFailed=false;
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');toastTime=4}
 
-const mainTracks=[mainTrack(true),mainTrack(false)];
-const sidings=[-3.5,-.4,2.7];
-const yardTracks=sidings.map(z=>
- new Track().add(-11,-3.5).line(-4,-3.5)
- .curve(-1.5,-3.5,-1.5,z,1.5,z).line(10.8,z)
-);
-const crossingPositions=mainTracks.map(p=>
- [-6.325,6.325].map(z=>p.nearest(-13,z))
-);
-const stopPosition=mainTracks[0].nearest(-2,7);
-
-const mainTrain={
- s:12,v:2.2,route:0,next:0,dwell:0,served:false,laps:0
-};
-const freight={
- s:9,v:1.3,route:0,next:0,dir:1,dwell:0,loads:0,jobs:0,job:1
-};
-
-let paused=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let night=false,nightMix=0,power=.65,time=0;
-let gate=0,gateDown=false,particles=[],steam=0,toastTime=0;
-
-const cars=[
- {z:-11,dir:1,x:-13.57,color:'#eac369',v:0},
- {z:3,dir:-1,x:-12.43,color:'#7daca5',v:1.3}
-];
-
-let audioContext=null,rumble=null,rumbleGain=null,soundOn=false;
-
-function toast(msg){
- $('toast').textContent=msg;
- $('toast').classList.add('show');
- toastTime=4;
+// Small native WebGL renderer: no library, CDN, textures or network requests.
+const gl=canvas.getContext('webgl',{antialias:true,alpha:false,powerPreference:'high-performance'});
+let program,staticMesh,dynamicMesh,locations;
+const vertexSource=`attribute vec3 position;attribute vec3 normal;attribute vec4 color;uniform mat4 vp;varying vec3 wp;varying vec3 n;varying vec4 c;void main(){wp=position;n=normal;c=color;gl_Position=vp*vec4(position,1.0);}`;
+const fragmentSource=`precision mediump float;varying vec3 wp;varying vec3 n;varying vec4 c;uniform float night;uniform float fogStart;uniform float fogEnd;uniform float tunnel;uniform vec3 sky;uniform vec3 eye;uniform vec3 lamp;uniform vec3 direction;void main(){float sun=max(dot(normalize(n),normalize(vec3(-0.5,1.0,0.4))),0.0);float ambient=mix(0.69,0.22,night)*(1.0-0.63*tunnel);vec3 base=c.rgb*(ambient+sun*mix(0.36,0.08,night));vec3 delta=wp-lamp;float dist=length(delta);float cone=smoothstep(0.76,0.94,dot(normalize(delta),direction));float beam=cone*(1.0-smoothstep(8.0,43.0,dist))*max(0.23,dot(normalize(n),-normalize(delta)));base+=c.rgb*vec3(1.0,0.85,0.57)*beam*max(night,tunnel)*1.35;base=mix(base,c.rgb*1.13,c.a);float fog=smoothstep(fogStart,fogEnd,length(wp-eye));gl_FragColor=vec4(mix(base,sky,fog),1.0);}`;
+function initGL(){if(!gl)throw Error('WebGL is unavailable');function shader(type,source){const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s}program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vertexSource));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fragmentSource));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));gl.useProgram(program);locations={};for(const n of ['vp','night','fogStart','fogEnd','tunnel','sky','eye','lamp','direction'])locations[n]=gl.getUniformLocation(program,n);for(const n of ['position','normal','color'])locations[n]=gl.getAttribLocation(program,n);gl.enable(gl.DEPTH_TEST);gl.clearColor(.81,.86,.8,1)}
+const rgbCache=new Map;function rgb(hex){if(!rgbCache.has(hex))rgbCache.set(hex,[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255));return rgbCache.get(hex)}
+class Mesh{
+ constructor(){this.vertices=[];this.count=0;this.buffer=gl?gl.createBuffer():null}
+ tri(a,b,c,col,lit=0){const n=norm(cross(vsub(b,a),vsub(c,a))),r=typeof col==='string'?rgb(col):col;for(const p of[a,b,c])this.vertices.push(...p,...n,...r,lit)}
+ quad(a,b,c,d,col,lit=0){this.tri(a,b,c,col,lit);this.tri(a,c,d,col,lit)}
+ box(x,y,z,w,h,d,col,a=0,pitch=0,lit=0){const ca=Math.cos(a),sa=Math.sin(a),cp=Math.cos(pitch),sp=Math.sin(pitch),p=[];for(const yy of[-h/2,h/2])for(const[xx,zz]of[[-w/2,-d/2],[w/2,-d/2],[w/2,d/2],[-w/2,d/2]]){const tx=xx*cp-yy*sp,ty=xx*sp+yy*cp;p.push([x+tx*ca-zz*sa,y+ty,z+tx*sa+zz*ca])}for(const ids of[[4,7,6,5],[0,1,2,3],[0,4,5,1],[3,2,6,7],[1,5,6,2],[0,3,7,4]])this.quad(...ids.map(i=>p[i]),col,lit)}
+ beam(a,b,w,d,col){const p=vscale(vadd(a,b),.5),v=vsub(b,a),len=Math.hypot(...v);this.box(...p,len,w,d,col,Math.atan2(v[2],v[0]),Math.atan2(v[1],Math.hypot(v[0],v[2])))}
+ upload(dynamic=false){this.count=this.vertices.length/10;gl.bindBuffer(gl.ARRAY_BUFFER,this.buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(this.vertices),dynamic?gl.DYNAMIC_DRAW:gl.STATIC_DRAW);if(!dynamic)this.vertices=[]}
+ draw(){gl.bindBuffer(gl.ARRAY_BUFFER,this.buffer);for(const[n,size,offset]of[['position',3,0],['normal',3,12],['color',4,24]]){gl.enableVertexAttribArray(locations[n]);gl.vertexAttribPointer(locations[n],size,gl.FLOAT,false,40,offset)}gl.drawArrays(gl.TRIANGLES,0,this.count)}
 }
-
-function note(freq,duration=.2,volume=.045,type='sine',delay=0){
- if(!soundOn||!audioContext)return;
- const o=audioContext.createOscillator();
- const g=audioContext.createGain();
- const t=audioContext.currentTime+delay;
- o.type=type;
- o.frequency.setValueAtTime(freq,t);
- g.gain.setValueAtTime(0,t);
- g.gain.linearRampToValueAtTime(volume,t+.025);
- g.gain.exponentialRampToValueAtTime(.001,t+duration);
- o.connect(g);
- g.connect(audioContext.destination);
- o.start(t);
- o.stop(t+duration+.03);
+function mul(a,b){const o=new Float32Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++)for(let k=0;k<4;k++)o[c*4+r]+=a[k*4+r]*b[c*4+k];return o}
+function viewMatrix(eye,target){const z=norm(vsub(eye,target)),x=norm(cross([0,1,0],z)),y=cross(z,x);return new Float32Array([x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-dot(x,eye),-dot(y,eye),-dot(z,eye),1])}
+function perspective(fov,aspect,near=.08,far=260){const f=1/Math.tan(fov/2);return new Float32Array([f/aspect,0,0,0,0,f,0,0,0,0,(far+near)/(near-far),-1,0,0,2*far*near/(near-far),0])}
+function ortho(w,h){return new Float32Array([2/w,0,0,0,0,2/h,0,0,0,0,-2/600,0,0,0,-1,1])}
+function local(p,x,y,z){const cp=Math.cos(p.pitch||0),sp=Math.sin(p.pitch||0),xx=x*cp-y*sp,yy=x*sp+y*cp;return[p.x+xx*Math.cos(p.a)-z*Math.sin(p.a),p.y+yy,p.z+xx*Math.sin(p.a)+z*Math.cos(p.a)]}
+function L(mesh,p,x,y,z,w,h,d,c,lit=0){mesh.box(...local(p,x,y,z),w,h,d,c,p.a,p.pitch||0,lit)}
+const riverX=z=>20+Math.sin(z*.095)*2.8;
+const railSamples=[];for(const t of [...mainTracks,yardTracks[0],...yardBranches])for(let s=0;s<t.L;s+=.55){const p=t.point(s);railSamples.push({...p,s,t})}
+function nearestRail(x,z){let best=Infinity,point=null;for(const p of railSamples){const d=(x-p.x)**2+(z-p.z)**2;if(d<best){best=d;point=p}}return{d:Math.sqrt(best),p:point}}
+function hill(x,z,cx,cz,r,h){return h*Math.pow(Math.max(0,1-((x-cx)**2+(z-cz)**2)/(r*r)),1.3)}
+function terrain(x,z,near=nearestRail(x,z)){
+ const river=Math.abs(x-riverX(z));let h=-2.7+smooth((river-2.7)/4.5)*2.7;
+ h+=hill(x,z,37,1,14,13.8)+hill(x,z,35,-20,14,5.8)+hill(x,z,-6,-14,11,5.1)+hill(x,z,0,29,11,3.2)+hill(x,z,9,3,10,2.6);
+ const flat=smooth((near.d-1.5)/3.8);h=mix(near.p.y-.15,h,flat);
+ if(river<5.8)h=Math.min(h,-2.7+smooth((river-2.6)/3.2)*2.6);
+ if(Math.abs(x-ROAD)<2.6)h=Math.min(h,0);
+ if(x<-6&&x>-39&&z>-11&&z<15)h=0;
+ return Math.round(h*4)/4;
 }
-
-function whistle(){
- const p=mainTracks[mainTrain.route].pose(mainTrain.s);
- for(let i=0;i<10;i++)puff(p.x,p.z,2,0);
- if(soundOn){
-  note(440,.9,.06,'triangle');
-  note(554,.85,.035,'triangle');
-  note(660,.8,.025,'sine');
+const trees=[],lamps=[],bridgeSpans=[];
+function tree(m,x,z,h=3.4,type=0){const ground=terrain(x,z);trees.push({x,y:ground,z,h});m.box(x,ground+h*.3,z,.35,h*.6,.35,'#836442');if(type===1){for(let i=0;i<4;i++)m.box(x,ground+h*(.42+i*.17),z,h*(.68-i*.14),h*.27,h*(.68-i*.14),['#557d53','#49724e','#608654','#75985c'][i])}else{m.box(x,ground+h*.75,z,h*.77,h*.68,h*.75,type===2?'#d49a50':'#789a5a');m.box(x-.35,ground+h*.9,z+.2,h*.6,h*.46,h*.58,type===2?'#e8b961':'#8aaa60');m.box(x+.45,ground+h*.67,z-.3,h*.52,h*.47,h*.6,type===2?'#b98148':'#5f874f')}}
+function house(m,x,z,w=3.5,d=3,color='#d7bd8b',roof='#b97454',y=0){m.box(x,y+1.1,z,w,2.2,d,color);m.box(x,y+2.32,z,w+.4,.25,d+.4,roof);m.box(x,y+2.6,z,w*.8,.36,d+.17,roof);m.box(x,y+2.86,z,w*.48,.22,d,roof);for(const side of[-1,1])for(const dx of[-w*.28,w*.28])m.box(x+dx,y+1.3,z+side*(d*.5+.018),.58,.7,.05,'#608a86');m.box(x,y+.7,z+d*.5+.045,.65,1.4,.08,'#6e6651');m.box(x+w*.29,y+3.06,z-.5,.42,.8,.43,'#957d67')}
+function lamp(m,x,z,y=0){lamps.push({x,y,z});m.box(x,y+1.6,z,.11,3.2,.11,'#4d6860');m.box(x,y+3.17,z,.6,.14,.6,'#596c61');m.box(x,y+3,z,.32,.28,.32,'#ffe5a1',0,0,1)}
+function rails(m,t){
+ for(let s=0;s<t.L;s+=.7){const p=t.pose(s),onBridge=Math.abs(p.x-riverX(p.z))<5.8;if(!onBridge)L(m,p,0,.04,0,.75,.18,1.7,'#8b8977');L(m,p,0,.16,0,.17,.13,1.43,'#7b634a')}
+ for(let s=0;s<t.L;s+=.55){const a=t.pose(s),b=t.pose(Math.min(t.L-.001,s+.56));for(const z of[-.5,.5])m.beam(local(a,0,.26,z),local(b,0,.26,z),.085,.09,'#b6b5a0')}
+}
+function buildBridges(m,t){let start=null;for(let s=0;s<t.L;s+=.45){const p=t.point(s),over=Math.abs(p.x-riverX(p.z))<5.8;if(over&&start===null)start=s;if(!over&&start!==null){bridgeSpans.push([start,s]);start=null}}
+ for(let k=0;k<bridgeSpans.length;k++){const[a,b]=bridgeSpans[k];for(let s=a;s<b;s+=1.2){const p=t.pose(s);L(m,p,0,-.15,0,1.3,.35,2.7,k===0?'#687f75':'#8f6c4e');for(const side of[-1,1]){L(m,p,0,.76,side*1.28,.1,1.5,.13,k===0?'#63796b':'#a9835c');L(m,p,0,1.46,side*1.28,1.3,.12,.12,k===0?'#7f9981':'#ac8b67')}if(Math.floor((s-a)/1.2)%3===0){for(const side of[-1,1]){const q=local(p,0,0,side*.85);m.box(q[0],(p.y-2.7)/2,q[2],.64,p.y+2.7,.64,k===0?'#9e9c86':'#967556')}}}
+ if(k===0)for(let s=a;s<b-2.5;s+=2.5){const p=t.pose(s),q=t.pose(Math.min(s+2.5,b));for(const side of[-1,1]){m.beam(local(p,0,.3,side*1.35),local(q,0,3.3,side*1.35),.16,.18,'#67877d');m.beam(local(p,0,3.3,side*1.35),local(q,0,.3,side*1.35),.16,.18,'#67877d');m.beam(local(p,0,3.3,side*1.35),local(q,0,3.3,side*1.35),.2,.22,'#91a99a')}m.beam(local(p,0,3.3,-1.35),local(p,0,3.3,1.35),.18,.18,'#91a99a')}
  }
- toast(soundOn?'All aboard!':'Toot toot! Enable Sound to hear the whistle.');
+}
+function buildTunnel(m,t){for(const[a,b]of t.tunnels){for(let s=a;s<b;s+=.8){const p=t.pose(s+.4);for(const side of[-1,1])L(m,p,0,1.62,side*2.12,.86,3.45,.55,'#737f78');L(m,p,0,3.45,0,.86,.5,4.8,'#77837a');if(Math.floor((s-a)/.8)%4===0){for(const side of[-1,1])L(m,p,0,1.7,side*1.84,.12,3.3,.16,'#a1a28c');L(m,p,0,3.15,0,.12,.13,3.8,'#a1a28c');L(m,p,0,2.5,-1.8,.2,.2,.1,'#ffd991',1)}}for(const s of[a-.15,b+.15]){const p=t.pose(s);for(const side of[-1,1]){L(m,p,0,1.8,side*2.32,.9,3.8,1,'#b4b19a');for(let y=.3;y<3.8;y+=.56)L(m,p,.46,y,side*2.32,.03,.045,1.01,'#848875')}L(m,p,0,3.72,0,1,.75,5.6,'#c3bda5');L(m,p,0,4.15,0,1.1,.2,6,'#9ea28c')}}}
+function buildWorld(){
+ const m=new Mesh();m.box(0,-4.5,0,TABLE.width,1.25,TABLE.depth,'#a47750');m.box(0,-3.8,0,TABLE.width-.4,.2,TABLE.depth-.4,'#bf9768');
+ for(const x of[-48,0,48])for(const z of[-27,27])m.box(x,-8,z,1.4,6,1.4,'#886243');
+ for(let y=-4.94;y<-3.96;y+=.2){m.box(0,y,TABLE.depth/2+.01,TABLE.width,.025,.02,'#cea579');m.box(TABLE.width/2+.01,y,0,.02,.025,TABLE.depth,'#c99c6d')}
+ for(let x=-55;x<55;x+=1.5)for(let z=-33;z<33;z+=1.5){const xx=x+.75,zz=z+.75,n=nearestRail(xx,zz),h=terrain(xx,zz,n),r=Math.abs(xx-riverX(zz));let c=h>7?'#999d89':h>3.8?'#88926f':r<5?'#b0a17b':['#91ab6c','#8da767','#95ae72','#88a368'][Math.floor(random()*4)];m.box(xx,(-3.7+h)/2,zz,1.51,h+3.7,1.51,c);
+ if(n.p.t.inTunnel(n.p.s)&&n.d<3.9){const top=hill(xx,zz,37,1,14,13.8),floor=n.p.y+3.72;if(top>floor)m.box(xx,(top+floor)/2,zz,1.51,top-floor,1.51,'#929d7a')}
+ }
+ for(let z=-33.2;z<33.2;z+=.8){const x=riverX(z);m.box(x,-2.25,z,6.8,.13,.85,'#619eaa');if(Math.floor(z*3)%3===0)m.box(x+(random()-.5)*4,-2.176,z,1.3,.015,.06,'#b4d6c8')}
+ m.box(ROAD,.025,0,2.65,.1,66,'#828e86');for(let z=-32;z<33;z+=1.5)m.box(ROAD,.085,z,.05,.016,.65,'#eadbb0');
+ for(const t of[mainTracks[0],bypassTrack,yardTracks[0],...yardBranches,yardEntry])rails(m,t);
+ buildBridges(m,mainTracks[0]);buildTunnel(m,mainTracks[0]);
+ // Little Junction station, goods yard and a compact village.
+ m.box(-27,.32,14,20,.55,3.2,'#b7ad8d');m.box(-27,.61,15.55,20,.08,.15,'#eed28b');house(m,-28,12.7,8.5,2.8,'#dac397','#8c6550');
+ for(let x=-35;x<-18;x+=2.5){m.box(x,1.5,14.6,.1,1.9,.1,'#7a8470');m.box(x,2.52,14.6,2.65,.2,2.1,'#6e8e7d')}for(const x of[-35,-30,-23,-18])lamp(m,x,15);
+ house(m,-12,-9.4,9,4.5,'#9ca287','#637e76');m.box(-12,.2,-7,10,.3,1,'#b3a787');
+ for(const x of[-9,-13,-17])for(let i=0;i<3;i++)m.box(x+i*.63,.5,5,.55,.8,.58,'#b0925d');
+ for(const z of sidings){m.box(-6.3,.54,z,.35,.9,1.55,'#a8644d');for(const zz of[-.5,.5])m.box(-6.3,.75,z+zz,.1,.11,.35,'#f1d390')}
+ for(let i=0;i<7;i++)house(m,-36+i%4*5.1,3+Math.floor(i/4)*5.5,3.4,3,['#dbc695','#bdba9d','#d1ad87'][i%3],['#a3674e','#708876','#aa875a'][i%3]);
+ for(let x=-37;x<-15;x+=1)m.box(x,.03,7,1,.05,.65,'#bbaa87');
+ for(let i=0;i<20;i++){const x=-34+random()*23,z=-10+random()*23; if(nearestRail(x,z).d>1.8){m.box(x,.25,z,.2,.4,.2,['#bb7957','#617d86','#e2bd64'][i%3]);m.box(x,.55,z,.18,.2,.18,'#d7b589')}}
+ // Water tower, loading crane and fuel tanks.
+ for(const x of[-22.8,-21.2])for(const z of[6.2,7.8])m.box(x,1.5,z,.2,3,.2,'#786b50');m.box(-22,3.3,7,2.7,1.7,2.7,'#8f9a84');m.box(-22,4.24,7,3,.18,3,'#727f6c');
+ m.box(-10,2.4,1,.35,4.8,.35,'#c6ac65');m.box(-11.5,4.75,1,4.2,.3,.4,'#c6ac65');
+ for(const x of[-20,-16]){m.box(x,.25,-10,2.6,.3,2.1,'#a29b7d');m.box(x,1.3,-10,2,1.9,1.6,'#b5b6a0')}
+ // Fields, orchard, forest, high meadows and a small lake campsite.
+ for(let r=0;r<7;r++)for(let c=0;c<8;c++)m.box(-25+c*1.4,.15,-17+r*.53,.85,.32,.2,r%2?'#baa562':'#d4b972');
+ for(let i=0;i<290;i++){const x=-52+random()*104,z=-30+random()*60,n=nearestRail(x,z);if(n.d<3||Math.abs(x-ROAD)<3||Math.abs(x-riverX(z))<5.5||(x<-5&&x>-39&&z>-20&&z<22))continue;const h=terrain(x,z,n);if(h>10)continue;tree(m,x,z,2.2+random()*3.5,x>23?1:x<-30?2:random()>.35?1:0)}
+ for(let i=0;i<12;i++)tree(m,-34+i%4*3,-12-Math.floor(i/4)*2.4,2.1,0);
+ for(const[x,z]of[[4,8],[8,10],[11,8],[4,13]]){const y=terrain(x,z);m.box(x,y+.62,z,1.8,1.25,2,'#dba263');m.box(x,y+1.35,z,1.3,.3,2.1,'#f0c780')}
+ for(let i=0;i<12;i++){const x=1+i*.8,z=-3+Math.sin(i*.6)*.5;m.box(x,terrain(x,z)+.15,z,.55,.3,.65,'#bac0a1')}
+ for(let i=0;i<3;i++){const x=-5+i*3,z=-16;const y=terrain(x,z);m.box(x,y+.7,z,.6,1.4,.7,'#bec2ac');m.box(x,y+1.5,z,1.3,.25,1.2,'#d1cbb0')}
+ staticMesh=m;m.upload();dynamicMesh=new Mesh();
 }
 
-function puff(x,z,y,kind){
- particles.push({
-  x,z,y,
-  vx:(random()-.5)*.35,
-  vz:(random()-.5)*.3,
-  vy:kind===1?2+random()*3:.65+random()*.5,
-  life:kind===1?2:3,
-  max:kind===1?2:3,
-  size:kind===1?.13:.28+random()*.2,
-  kind,
-  color:['#ffc66b','#db7864','#9dcabb','#e6e9c9'][Math.floor(random()*4)]
- });
+function vehicle(mesh,p,kind,accent='#b5805b',onlyHood=false){
+ const B=(x,y,z,w,h,d,c,lit=0)=>L(mesh,p,x,y,z,w,h,d,c,lit);
+ if(onlyHood){B(.76,1.03,0,1.38,.51,.86,'#5d8c80');B(.83,1.31,0,1.4,.08,.89,'#779e89');return}
+ B(0,.43,0,2.5,.24,1.12,'#445a52');for(const x of[-.85,.85])for(const z of[-.57,.57]){B(x,.27,z,.48,.47,.17,'#354c47');B(x,.28,z*1.03,.18,.19,.018,'#9fa28b')}B(-1.42,.4,0,.33,.09,.16,'#7b8470');B(1.42,.4,0,.33,.09,.16,'#7b8470');
+ if(kind==='engine'){
+  B(.45,.96,0,1.7,.9,1,'#4e8377');B(.61,1.44,0,1.75,.11,1.06,'#86aa91');B(-.69,1.22,0,.74,1.46,1.15,'#c87e57');B(-.69,1.99,0,.94,.16,1.3,'#435f58');
+  B(-.305,1.64,0,.026,.42,.9,'#f0dbab');for(const z of[-.581,.581])B(-.66,1.61,z,.5,.43,.02,'#d9dfbe');
+  for(const z of[-.51,.51]){B(.43,.97,z,1.58,.16,.04,'#dfc084');for(let i=0;i<6;i++)B(.05+i*.19,1.22,z,.055,.26,.035,'#385b53')}
+  B(1.32,1.2,0,.07,.18,.5,'#ffe8a5',1);B(1.32,.77,0,.12,.22,.9,'#e3c07f');B(.15,1.71,0,.16,.47,.17,'#4a5f53');
+  for(const z of[-.26,0,.26])B(-.35,2.12,z,.35,.13,.16,'#d9bd71');
+ }else if(kind==='coach'){
+  B(0,1.14,0,2.65,1.22,1.15,'#78998c');B(0,1.82,0,2.79,.19,1.27,'#e4d6ab');B(0,.88,0,2.69,.18,1.19,'#e7cc91');
+  for(const z of[-.59,.59])for(const x of[-.94,-.32,.32,.94])B(x,1.43,z,.41,.5,.035,'#f0dfb1',nightMix*.7);
+ }else if(kind==='diesel'){
+  B(.42,.94,0,1.57,.87,1.01,'#cda65d');B(-.73,1.24,0,.7,1.46,1.1,'#678c7c');B(-.73,2,0,.93,.16,1.28,'#c6b688');for(const z of[-.56,.56])B(-.7,1.63,z,.47,.4,.025,'#dbe1bf');B(1.28,1.16,0,.08,.19,.45,'#ffe3a0',1);
+ }else{
+  B(0,.91,0,2.49,.83,1.18,accent);B(0,1.38,0,2.59,.15,1.27,accent);for(const x of[-1,-.5,0,.5,1])for(const z of[-.61,.61])B(x,1.02,z,.05,.76,.05,'#dac196');for(let i=0;i<4;i++)B(-.9+i*.6,1.51,0,.52,.18,.92,'#686e59');
+ }
 }
-
-function setRoute(n){
- mainTrain.next=n;
- sync();
- toast('Express route requested: '+(n===0?'platform.':'bypass.'));
+function train(mesh,t,track,isFreight=false){const gap=isFreight?2.75:2.95,kinds=isFreight?['diesel','wagon','wagon']:['engine','coach','coach','coach'];for(let i=0;i<kinds.length;i++)vehicle(mesh,track.pose(t.s-i*gap),kinds[i],i===1?'#bc7d5b':'#959970',cab&&!isFreight&&i===0)}
+function crossing(mesh){for(const cp of crossingPositions[0])for(const side of[-1,1]){const x=ROAD+side*1.7,z=cp.z+side*2.0;mesh.box(x,.65,z,.22,1.3,.24,'#e2d8b0');mesh.box(x,1.75,z,.6,.22,.25,'#3f5950');for(const dx of[-.18,.18])mesh.box(x+dx,1.75,z+.15,.13,.14,.04,gate>.02&&(Math.floor(time*3)+(dx>0?1:0))%2?'#ff7853':'#81574a',0,0,1);const a=(1-gate)*Math.PI/2;for(let i=0;i<9;i++){const t=(i+.5)*2.85/9;mesh.box(x-side*Math.cos(a)*t,1.13+Math.sin(a)*t,z,2.85/9,.1,.13,i%2?'#e9dfbb':'#bc735a',side>0?Math.PI:0,a)}}}
+function signals(mesh){for(const [x,z,green]of[[-16,15.6,mainTrain.next===mainTrain.route],[-30,-7.6,freight.dwell<=0]]){mesh.box(x,1.3,z,.11,2.6,.11,'#4b6256');mesh.box(x,2.35,z,.42,.64,.3,'#3d554d');mesh.box(x,green?2.18:2.51,z+.18,.18,.18,.05,green?'#b4db8d':'#ef8057',0,0,1)}for(const [x,z,on]of[[-18,17,mainTrain.route===1],[-31,-6,freight.route!==0]]){mesh.box(x,.38,z-1,.14,.65,.14,'#647b62');mesh.box(x+(on?.15:-.15),.71,z-1,.5,.09,.15,'#f0c96e')}}
+function puff(x,y,z,celebrate=false){if(particles.length>130)return;particles.push({x,y,z,vx:(random()-.5)*.5,vy:celebrate?2.5+random()*2.5:.7,vz:(random()-.5)*.5,life:celebrate?2:1.7,size:celebrate?.12:.2+random()*.1,color:celebrate?['#edc86e','#c88060','#aed5a0'][Math.floor(random()*3)]:'#c6c5af',celebrate})}
+let audioContext=null,rumble=null,rumbleGain=null,soundOn=false,lastHorn=-Infinity;
+async function ensureAudio(){if(!audioContext){const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)throw Error('Audio unavailable');audioContext=new Audio();rumble=audioContext.createOscillator();rumbleGain=audioContext.createGain();rumble.type='triangle';rumble.frequency.value=42;rumbleGain.gain.value=0;rumble.connect(rumbleGain);rumbleGain.connect(audioContext.destination);rumble.start()}await audioContext.resume()}
+function note(freq,duration=.15,volume=.025,delay=0){if(!audioContext||!soundOn)return;const t=audioContext.currentTime+delay,o=audioContext.createOscillator(),g=audioContext.createGain();o.frequency.value=freq;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(volume,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g);g.connect(audioContext.destination);o.start(t);o.stop(t+duration+.03);o.onended=()=>{o.disconnect();g.disconnect()}}
+async function horn(){
+ if(performance.now()-lastHorn<450)return;lastHorn=performance.now();hornFlash=1.7;
+ toast('BRAAAM! Juniper Express coming through.');
+ try{await ensureAudio();const t=audioContext.currentTime,filter=audioContext.createBiquadFilter(),gain=audioContext.createGain(),compressor=audioContext.createDynamicsCompressor();filter.type='lowpass';filter.frequency.value=1600;filter.Q.value=.6;gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(.17,t+.09);gain.gain.setValueAtTime(.17,t+.94);gain.gain.exponentialRampToValueAtTime(.0001,t+1.45);filter.connect(gain);gain.connect(compressor);compressor.connect(audioContext.destination);
+  const voices=[220,277.18,329.63,440,554.37].map((f,i)=>{const o=audioContext.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(f*.982,t);o.frequency.exponentialRampToValueAtTime(f,t+.12);o.detune.value=i%2?3:-3;o.connect(filter);o.start(t);o.stop(t+1.5);return o});
+  let delay=null,echo=null;if(mainTracks[mainTrain.route].inTunnel(mainTrain.s)){delay=audioContext.createDelay();echo=audioContext.createGain();delay.delayTime.value=.18;echo.gain.value=.22;gain.connect(delay);delay.connect(echo);echo.connect(compressor)}
+  voices.at(-1).onended=()=>setTimeout(()=>{voices.forEach(o=>o.disconnect());filter.disconnect();gain.disconnect();compressor.disconnect();delay?.disconnect();echo?.disconnect()},500);
+ }catch(e){toast('Audio is unavailable in this browser. Enable audio access to hear the horn.')}
 }
-function setSiding(n){
- freight.next=n;
- sync();
- toast('Siding 0'+(n+1)+' queued. Points move when the train is clear.');
-}
-
-/* Independent main line and yard circuits prevent train conflicts. */
+function setRoute(n){mainTrain.next=n;toast(n?'Bypass requested. Points wait for the whole train.':'Platform requested. The next station stop is yours.');sync()}
+function setSiding(n){freight.next=n;toast('Siding 0'+(n+1)+' requested. Shunter changes at the headshunt.');sync()}
 function update(dt){
- if(!paused){
-  time+=dt;
-  const m=mainTrain;
-
-  // Both main routes share this clear stretch of straight track.
-  if(m.route!==m.next&&m.s>9&&m.s<18.8){
-   m.route=m.next;
-   toast('Main line points set. '+(m.route?'Bypass clear.':'Platform clear.'));
-  }
-
-  const path=mainTracks[m.route],pos=path.point(m.s);
-  let target=power*5.3;
-  if(Math.abs(pos.x)>10)target=Math.min(target,2.15);
-
-  let stopDist=Infinity;
-  if(m.route===0&&!m.served&&m.s<=stopPosition){
-   stopDist=stopPosition-m.s;
-  }
-
-  if(m.dwell>0){
-   m.dwell=Math.max(0,m.dwell-dt);
-   target=0;
-   if(m.dwell<=0){
-    m.served=true;
-    toast('Doors closed. Next stop: another lap.');
-    note(650,.2,.035);
-    note(870,.25,.035,'sine',.2);
-   }
-  }else if(stopDist<8){
-   target=Math.min(target,Math.sqrt(2*1.3*Math.max(0,stopDist)));
-  }
-
-  m.v+=clamp(target-m.v,-1.4*dt,.75*dt);
-  let ds=m.v*dt;
-
-  if(!m.served&&!m.dwell&&stopDist<.05&&power>0){
-   m.s=stopPosition;
-   m.v=0;
-   m.dwell=4.2;
-   ds=0;
-   toast('Juniper Express: passengers boarding.');
-  }else if(ds>stopDist){
-   ds=stopDist;
-   m.v=0;
-  }
-
-  m.s+=ds;
-  if(m.s>=path.L){
-   m.s-=path.L;
-   m.laps++;
-   m.served=false;
-  }
-
-  const f=freight;
-  const wasDwelling=f.dwell>0;
-  const fp=yardTracks[f.route];
-  const end=f.dir>0?fp.L-1.25:5.5;
-  const remain=Math.abs(end-f.s);
-  const fv=f.dwell>0?0:Math.min(2.2,Math.sqrt(2*1.4*remain));
-
-  if(f.dwell>0){
-   f.dwell-=dt;
-   if(f.dwell<=0)f.dir*=-1;
-  }
-
-  f.v+=clamp(fv-f.v,-1.5*dt,1.0*dt);
-
-  if(!wasDwelling){
-   const step=Math.min(remain,f.v*dt);
-   f.s+=step*f.dir;
-
-   if(remain<.035){
-    f.s=end;
-    f.v=0;
-    f.dwell=f.dir>0?3.5:1.8;
-
-    if(f.dir>0){
-     f.loads++;
-     if(f.route===f.job){
-      f.jobs++;
-      f.job=(f.job+1+(random()>.5?1:0))%3;
-      for(let i=0;i<25;i++)puff(9,sidings[f.route],1.7,1);
-      toast('Job complete! One tiny delivery, one big win.');
-      [520,650,780,1040].forEach((hz,i)=>
-       note(hz,.2,.035,'sine',i*.11)
-      );
-     }
-    }else{
-     // The complete consist is behind the junction.
-     f.route=f.next;
-     toast('Yard points set to siding 0'+(f.route+1)+'.');
-    }
-   }
-  }
-
-  const cps=crossingPositions[m.route];
-  gateDown=cps.some(s=>
-   ((s-m.s+path.L)%path.L)<Math.max(5.5,m.v*2.6+1.5)||
-   ((m.s-s+path.L)%path.L)<8.8
-  );
-  gate+=clamp((gateDown?1:0)-gate,-dt*.8,dt*.9);
-
-  if(gateDown&&Math.floor(time*2)!==Math.floor((time-dt)*2)){
-   note(940,.09,.015);
-  }
-
-  for(const car of cars){
-   let blocked=false;
-   if(gateDown||gate>.05){
-    for(const z of [-6.325,6.325]){
-     const stop=z-car.dir*2.0;
-     const gap=(stop-car.z)*car.dir;
-     if(gap>=-.02&&gap<2.6){
-      blocked=true;
-      car.v=Math.min(car.v,Math.sqrt(2*2.5*Math.max(0,gap)));
-      if(gap<.035){
-       car.z=stop;
-       car.v=0;
-      }
-     }
-
-    }
-   }
-   car.v+=clamp((blocked?0:1.75)-car.v,-dt*2.4,dt);
-   car.z+=car.dir*car.v*dt;
-   if(car.z>13.4)car.z=-13.4;
-   if(car.z<-13.4)car.z=13.4;
-  }
-  steam+=dt;
-  if(steam>.16&&m.v>.05){
-   steam=0;
-   const p=path.pose(m.s);
-   puff(p.x+Math.cos(p.a)*.6,p.z+Math.sin(p.a)*.6,1.8,0);
-  }
-  for(const p of particles){
-   p.life-=dt;p.x+=p.vx*dt;p.z+=p.vz*dt;p.y+=p.vy*dt;
-   if(p.kind===1)p.vy-=dt*4;
-  }
-  particles=particles.filter(p=>p.life>0);
+ if(!paused){time+=dt;const m=mainTrain;
+  if(m.route!==m.next&&m.s>12&&m.s<22){m.route=m.next;toast(m.route?'Bypass points set.':'Platform points set.')}
+  const path=mainTracks[m.route],p=path.pose(m.s),curve=Math.abs(angleDiff(path.pose(m.s+3).a,path.pose(m.s-1).a))/4;
+  let target=Math.min(power*8/(1+Math.max(0,p.grade)*5),Math.max(2.0,Math.sqrt(1.3/(curve+.0001))));
+  let stopDist=m.route===0&&!m.served&&m.s<=stopPosition?stopPosition-m.s:Infinity;
+  if(m.dwell>0){m.dwell=Math.max(0,m.dwell-dt);target=0;if(m.dwell===0){m.served=true;toast('Doors closed. Next stop: the mountain route.');note(660,.15,.02);note(880,.2,.02,.18)}}else if(stopDist<16)target=Math.min(target,Math.sqrt(2*1.25*Math.max(0,stopDist)));
+  m.v+=clamp(target-m.v,-1.5*dt,Math.max(.35,.8-p.grade*1.8)*dt);let ds=m.v*dt;
+  if(!m.served&&!m.dwell&&stopDist<.045&&power>0){m.s=stopPosition;m.v=0;m.dwell=4.2;ds=0;toast('Juniper Express: passengers boarding.')}else if(ds>stopDist){ds=stopDist;m.v=0}
+  m.s+=ds;if(m.s>=path.L){m.s-=path.L;m.laps++;m.served=false}
+  const f=freight,wasDwelling=f.dwell>0,fp=yardTracks[f.route],end=f.dir>0?fp.L-1.4:6.5,remain=Math.abs(end-f.s),fv=wasDwelling?0:Math.min(2.5,Math.sqrt(2*1.4*remain));
+  if(wasDwelling){f.dwell=Math.max(0,f.dwell-dt);if(f.dwell===0)f.dir*=-1}f.v+=clamp(fv-f.v,-1.5*dt,dt);
+  if(!wasDwelling){f.s+=Math.min(remain,f.v*dt)*f.dir;if(remain<.035){f.s=end;f.v=0;f.dwell=f.dir>0?3.5:1.8;if(f.dir>0){f.loads++;if(f.route===f.job){f.jobs++;f.job=(f.job+1+(random()>.5?1:0))%3;for(let i=0;i<25;i++)puff(-8,1.7,sidings[f.route],true);toast('Delivery complete! The next siding is waiting.');[520,650,780].forEach((hz,i)=>note(hz,.2,.025,i*.12))}}else{f.route=f.next;toast('Yard points set to siding 0'+(f.route+1)+'.')}}}
+  gateDown=crossingPositions[m.route].some(c=>((c.s-m.s+path.L)%path.L)<Math.max(7,m.v*3.4+3)||((m.s-c.s+path.L)%path.L)<11.2);gate+=clamp((gateDown?1:0)-gate,-dt*.7,dt*.85);
+  if(gateDown&&Math.floor(time*2)!==Math.floor((time-dt)*2))note(940,.09,.012);
+  for(const car of cars){let target=2.4;if(gateDown||gate>.05)for(const c of crossingPositions[0]){const stop=c.z-car.dir*2.15,gap=(stop-car.z)*car.dir;if(gap>=-.02&&gap<4){target=Math.min(target,Math.sqrt(2*1.8*Math.max(0,gap)));if(gap<.04){car.z=stop;car.v=0;target=0}}}for(const other of cars)if(other!==car&&other.dir===car.dir){const gap=(other.z-car.z)*car.dir;if(gap>0&&gap<2.4)target=0}car.v+=clamp(target-car.v,-dt*2.6,dt);car.z+=car.dir*car.v*dt;if(car.z>32.8)car.z=-32.8;if(car.z<-32.8)car.z=32.8}
+  steam+=dt;if(steam>.23&&m.v>.1&&!cab){steam=0;const q=path.pose(m.s);puff(...local(q,.15,2.0,0))}
+  for(const p of particles){p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.z+=p.vz*dt;if(p.celebrate)p.vy-=dt*3.2}particles=particles.filter(p=>p.life>0);
  }
- nightMix+=clamp((night?1:0)-nightMix,-dt*.8,dt*.8);
- if(rumbleGain&&audioContext){
-  rumbleGain.gain.setTargetAtTime(soundOn&&!paused&&!document.hidden?.006+mainTrain.v*.002:0,audioContext.currentTime,.15);
-  rumble.frequency.setTargetAtTime(32+mainTrain.v*11,audioContext.currentTime,.2);
- }
- toastTime-=dt;if(toastTime<0)$('toast').classList.remove('show');
+ nightMix+=clamp((night?1:0)-nightMix,-dt*.65,dt*.65);hornFlash=Math.max(0,hornFlash-dt);toastTime-=dt;if(toastTime<0)$('toast').classList.remove('show');
+ if(rumbleGain){rumbleGain.gain.setTargetAtTime(soundOn&&!paused&&!document.hidden?.009+mainTrain.v*.002:0,audioContext.currentTime,.13);rumble.frequency.setTargetAtTime(34+mainTrain.v*7,audioContext.currentTime,.15)}
 }
-function sync(){
- const m=mainTrain,f=freight;
- $('speed').textContent=String(Math.round(m.v*6.26)).padStart(2,'0');
- $('powerReadout').textContent=Math.round(power*100)+'% POWER';
- $('expressState').textContent=paused?'PAUSED':m.dwell>0?'BOARDING':m.v<.05?'STOPPED':'RUNNING';
- $('freightState').textContent=paused?'PAUSED':f.dwell>0?(f.dir>0?'LOADING':'POINTS SET'):f.dir>0?'OUTBOUND':'REVERSING';
- $('platform').setAttribute('aria-pressed',String(m.next===0));
- $('bypass').setAttribute('aria-pressed',String(m.next===1));
- $('routeHint').textContent=m.next!==m.route?'Change queued. Waiting for the whole train to clear.':m.route===0?'Platform route. The express stops for passengers.':'Bypass route. The express runs through.';
- document.querySelectorAll('[data-siding]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.siding)===f.next)));
- $('sidingHint').textContent=f.next!==f.route?'Siding 0'+(f.next+1)+' queued until the shunter returns.':'Points set to siding 0'+(f.route+1)+'. Switches lock under trains.';
- $('orderText').textContent='Deliver a load to siding 0'+(f.job+1)+'.';
- $('laps').textContent=m.laps;$('loads').textContent=f.loads;$('jobs').textContent=f.jobs;
- $('gateLabel').textContent=paused?'YARD PAUSED':gate>.05?'CROSSING PROTECTED':'CROSSING CLEAR';
- $('gateDot').style.background=gate>.05?'#c17a45':'#487f60';
- $('pause').textContent=paused?'▶ Run yard':'Ⅱ Pause yard';
- $('pause').setAttribute('aria-pressed',String(paused));
+function locationName(){const t=mainTracks[mainTrain.route],s=mainTrain.s,p=t.point(s);if(t.inTunnel(s))return 'PINECREST TUNNEL';if(Math.abs(p.x-riverX(p.z))<6)return p.z<0?'RIVER TRUSS BRIDGE':'TIMBER VIADUCT';if(s>t.stationEntry-8&&s<t.stationExit+1)return mainTrain.route?'STATION BYPASS':'LITTLE JUNCTION';if(p.y>3)return 'PINECREST HIGHLANDS';if(p.z<-19)return 'NORTH WOODS';if(p.x<-40)return 'LEVEL CROSSING';return 'MEADOW BENDS'}
+function sync(){const m=mainTrain,f=freight,p=mainTracks[m.route].pose(m.s),speed=String(Math.round(m.v*6.26)).padStart(2,'0');
+ $('speed').textContent=speed;$('cabSpeed').textContent=speed;$('powerReadout').textContent=Math.round(power*100)+'% POWER';
+ $('expressState').textContent=paused?'PAUSED':m.dwell>0?'BOARDING':m.v<.05?'STOPPED':'RUNNING';$('freightState').textContent=paused?'PAUSED':f.dwell>0?'LOADING':f.dir>0?'OUTBOUND':'REVERSING';
+ $('platform').setAttribute('aria-pressed',String(m.next===0));$('bypass').setAttribute('aria-pressed',String(m.next===1));$('routeHint').textContent=m.next!==m.route?'Change queued until the whole train clears the points.':m.route?'Bypass route. The express runs through.':'Platform route. The express stops for passengers.';
+ document.querySelectorAll('[data-siding]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.siding)===f.next)));$('sidingHint').textContent=f.next!==f.route?'Siding 0'+(f.next+1)+' queued for the next return.':'Points set to siding 0'+(f.route+1)+'. Switches lock under trains.';
+ $('orderText').textContent='Deliver a load to siding 0'+(f.job+1)+'.';$('laps').textContent=m.laps;$('loads').textContent=f.loads;$('jobs').textContent=f.jobs;
+ $('gateLabel').textContent=paused?'YARD PAUSED':gate>.05?'CROSSING PROTECTED':'CROSSING CLEAR';$('gateDot').style.background=gate>.05?'#c17a45':'#487f60';$('pause').textContent=paused?'▶ Run yard':'Ⅱ Pause yard';$('pause').setAttribute('aria-pressed',String(paused));
+ $('cabGrade').textContent=(p.grade>=0?'+':'')+(p.grade*100).toFixed(1)+'%';$('cabLocation').textContent=locationName();$('cabStatus').textContent=paused?'PAUSED':m.dwell>0?'PASSENGERS BOARDING':power===0?'BRAKING / STOPPED':'JUNIPER EXPRESS';$('needle').style.transform='rotate('+(-120+m.v/8*240)+'deg)';$('cabHorn').classList.toggle('sounding',hornFlash>0);$('horn').classList.toggle('sounding',hornFlash>0);
+ $('cabToggle').textContent=cab?'▦ Table view':'▣ Cab view';$('cabToggle').setAttribute('aria-pressed',String(cab));$('cameraHint').textContent=cab?'DRAG TO LOOK · ⌂ LOOK AHEAD':'DRAG TO ORBIT · PINCH TO ZOOM';
 }
-
-/* Self-contained orthographic voxel renderer. */
-let W=1,H=1,S=1,ox=0,oy=0,yaw=.42,elevation=.64,zoom=1,sy=0,cy=1,se=.6,ce=.8;
-let faces=[],objects=[],trees=[],lamps=[];
-const colors=new Map;
-function color(hex,f=1,lit=false){
- let v=colors.get(hex);
- if(!v){v=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16));colors.set(hex,v)}
- const n=lit?0:nightMix*.62;
- return 'rgb('+v.map((a,i)=>Math.round(clamp(a*f*(1-n)+nightMix*(lit?0:i===2?13:i===1?7:0),0,255))).join(',')+')';
+let currentVP=null;
+function camera(){const aspect=W/H,p=mainTracks[mainTrain.route].pose(mainTrain.s-.55);let eye,target,projection;
+ if(cab){eye=local(p,0,1.7,0);const a=p.a+lookYaw,pitch=p.pitch+lookPitch;target=vadd(eye,[Math.cos(a)*Math.cos(pitch)*10,Math.sin(pitch)*10,Math.sin(a)*Math.cos(pitch)*10]);projection=perspective(cabFov*Math.PI/180,aspect)}
+ else{const distance=185;eye=[Math.sin(yaw)*Math.cos(elevation)*distance,Math.sin(elevation)*distance+1,Math.cos(yaw)*Math.cos(elevation)*distance];target=[0,1,0];const width=TABLE.width*Math.abs(Math.cos(yaw))+TABLE.depth*Math.abs(Math.sin(yaw))+9,height=(TABLE.width*Math.abs(Math.sin(yaw))+TABLE.depth*Math.abs(Math.cos(yaw)))*Math.sin(elevation)+24;const h=Math.max(height,width/aspect)/zoom;projection=ortho(h*aspect,h)}
+ return{eye,vp:mul(projection,viewMatrix(eye,target))};
 }
-function P(x,y,z){return{x:ox+(x*cy-z*sy)*S,y:oy+((x*sy+z*cy)*se-y*ce)*S}}
-function depth(p){return(p[0]*sy+p[2]*cy)*ce+p[1]*se}
-function poly(points,fill,alpha=1){
- ctx.globalAlpha=alpha;ctx.fillStyle=fill;ctx.beginPath();
- points.forEach((p,i)=>{const q=P(...p);if(i)ctx.lineTo(q.x,q.y);else ctx.moveTo(q.x,q.y)});
- ctx.closePath();ctx.fill();ctx.globalAlpha=1;
+function render(){if(renderFailed||!gl)return;const c=camera(),p=mainTracks[mainTrain.route].pose(mainTrain.s),inTunnel=cab&&mainTracks[mainTrain.route].inTunnel(mainTrain.s),dark=inTunnel?1:0;currentVP=c.vp;
+ const day=[.77,.84,.81],nightSky=[.06,.13,.16],sky=day.map((v,i)=>mix(v,nightSky[i],Math.max(nightMix,dark*.9)));
+ gl.viewport(0,0,canvas.width,canvas.height);gl.clearColor(...sky,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.uniformMatrix4fv(locations.vp,false,c.vp);gl.uniform1f(locations.night,nightMix);gl.uniform1f(locations.tunnel,dark);gl.uniform3fv(locations.sky,sky);gl.uniform3fv(locations.eye,c.eye);gl.uniform3fv(locations.lamp,local(p,1.6,1.3,0));gl.uniform3fv(locations.direction,[Math.cos(p.a)*Math.cos(p.pitch),Math.sin(p.pitch),Math.sin(p.a)*Math.cos(p.pitch)]);gl.uniform1f(locations.fogStart,cab?38:400);gl.uniform1f(locations.fogEnd,cab?145:600);staticMesh.draw();
+ dynamicMesh.vertices=[];train(dynamicMesh,mainTrain,mainTracks[mainTrain.route]);train(dynamicMesh,freight,yardTracks[freight.route],true);crossing(dynamicMesh);signals(dynamicMesh);
+ for(const car of cars){const p={x:car.x,y:0,z:car.z,a:car.dir*Math.PI/2,pitch:0};L(dynamicMesh,p,0,.48,0,1.43,.51,.74,car.color);L(dynamicMesh,p,-.17,.88,0,.74,.33,.63,'#d4d9bb');for(const x of[-.47,.47])for(const z of[-.38,.38])L(dynamicMesh,p,x,.25,z,.3,.32,.13,'#3b5047');L(dynamicMesh,p,.74,.5,0,.05,.16,.6,'#f5de9a',1)}
+ const hook=2.8+Math.sin(time*.8)*.6;dynamicMesh.box(-13.2,(4.7+hook)/2,1,.035,4.7-hook,.035,'#626b56');dynamicMesh.box(-13.2,hook,1,.25,.3,.24,'#b18c4d');
+ for(const p of particles)dynamicMesh.box(p.x,p.y,p.z,p.size,p.size,p.size,p.color,time*.2,0,p.celebrate?.3:0);
+ if(nightMix>.05)for(const l of lamps)dynamicMesh.box(l.x,l.y+3.02,l.z,.38,.28,.38,'#ffe3a0',0,0,1);
+ dynamicMesh.upload(true);dynamicMesh.draw();drawMap();
 }
-function box(x,y,z,w,h,d,c,a=0,lit=false,alpha=1){
- const ca=Math.cos(a),sa=Math.sin(a),p=[];
- for(const yy of[-h/2,h/2])for(const [xx,zz]of[[-w/2,-d/2],[w/2,-d/2],[w/2,d/2],[-w/2,d/2]]){
-  p.push([x+xx*ca-zz*sa,y+yy,z+xx*sa+zz*ca]);
- }
- function face(ids,k){
-  const points=ids.map(i=>p[i]);
-  faces.push({p:points,d:points.reduce((v,p)=>v+depth(p),0)/4,c:color(c,k,lit),alpha});
- }
- face([4,5,6,7],1.1);
- if(Math.sin(yaw+a)>0)face([1,2,6,5],.78);else face([0,4,7,3],.87);
- if(Math.cos(yaw+a)>0)face([3,7,6,2],.94);else face([0,1,5,4],.72);
-}
-function flush(){faces.sort((a,b)=>a.d-b.d);for(const f of faces)poly(f.p,f.c,f.alpha);faces=[]}
-function B(...args){objects.push(args)}
-function groundRect(x,z,w,d,c,y=.018){
- poly([[x-w/2,y,z-d/2],[x+w/2,y,z-d/2],[x+w/2,y,z+d/2],[x-w/2,y,z+d/2]],color(c));
-}
-function groundLine(x,z,xx,zz,w,c,y=.027){
- const a=Math.atan2(zz-z,xx-x),nx=-Math.sin(a)*w/2,nz=Math.cos(a)*w/2;
- poly([[x+nx,y,z+nz],[xx+nx,y,zz+nz],[xx-nx,y,zz-nz],[x-nx,y,z-nz]],color(c));
-}
-const railGeometry=new Map;
-const bypassTrack=new Track().add(7,7).curve(5,7,5,9,3,9).line(-3,9).curve(-5,9,-5,7,-7,7);
-const yardBranches=sidings.slice(1).map(z=>new Track().add(-4,-3.5).curve(-1.5,-3.5,-1.5,z,1.5,z).line(10.8,z));
-function trackSamples(t){
- let cache=railGeometry.get(t);if(cache)return cache;
- const edges=[],ties=[];
- for(let s=0;s<t.L;s+=.28)edges.push(t.pose(s));
- edges.push(t.pose(t.L-.001));
- for(let s=0;s<t.L;s+=.43)ties.push(t.pose(s));
- cache={edges,ties};railGeometry.set(t,cache);return cache;
-}
-function ribbon(t,width,c,y=.04,offset=0){
- const a=[],b=[];
- for(const p of trackSamples(t).edges){
-  const nx=-Math.sin(p.a),nz=Math.cos(p.a);
-  a.push([p.x+nx*(width/2+offset),y,p.z+nz*(width/2+offset)]);
-  b.push([p.x+nx*(-width/2+offset),y,p.z+nz*(-width/2+offset)]);
- }
- poly(a.concat(b.reverse()),color(c));
-}
-function rails(t){
- ribbon(t,1.55,'#9c9b86',.045);ribbon(t,1.25,'#aaa894',.047);
- for(const p of trackSamples(t).ties){
-  const nx=-Math.sin(p.a),nz=Math.cos(p.a);
-  groundLine(p.x+nx*.69,p.z+nz*.69,p.x-nx*.69,p.z-nz*.69,.16,'#706653',.06);
- }
- ribbon(t,.075,'#485557',.083,-.43);ribbon(t,.075,'#485557',.083,.43);
- ribbon(t,.026,'#d3d3bd',.09,-.43);ribbon(t,.026,'#d3d3bd',.09,.43);
-}
-function shadow(x,z,w,d){
- const p=[];
- for(let i=0;i<20;i++){const a=i/20*TAU;p.push([x+Math.cos(a)*w,.025,z+Math.sin(a)*d])}
- poly(p,'#214238',.13);
-}
-function tree(x,z,h=2.8,pine=false){
- trees.push({x,z,h});B(x,h*.3,z,.23,h*.6,.23,'#7e6646');
- if(pine){
-  for(let i=0;i<4;i++){
-   const w=1.7-i*.35;
-   B(x,h*.42+i*h*.17,z,w,h*.3,w,['#376951','#47785b','#588664','#699772'][i]);
-  }
- }else{
-  B(x,h*.65,z,1.5,h*.48,1.45,'#71935c');
-  B(x-.35,h*.9,z-.22,1.2,h*.29,1.15,'#93a56a');
-  B(x+.45,h*.72,z+.25,.9,h*.35,1.15,'#62875b');
- }
-}
-function person(x,z,c='#d98260'){
- B(x,.14,z,.1,.27,.22,'#44555c');B(x+.15,.14,z,.1,.27,.22,'#44555c');
- B(x+.07,.44,z,.35,.35,.23,c);
- B(x+.07,.73,z,.24,.25,.23,'#dab089');B(x+.07,.89,z,.3,.08,.28,'#e9cc7f');
-}
-function crate(x,z,y=0,c='#b98353'){
- B(x,y+.38,z,.65,.75,.65,c);
- B(x,y+.39,z+.335,.075,.69,.028,'#e6bf83');B(x,y+.39,z-.335,.075,.69,.028,'#e6bf83');
-}
-function buildScenery(){
- for(const t of[
-  [-18,-8,3.2,1],[-19,-3,2.7,1],[-18.7,2,2.8,1],[-18,8,3.3,1],
-  [-9,-10.2,2.6,0],[-5,-10.6,3.3,1],[.5,-10.6,2.8,1],[5,-10,3,0],
-  [10,-10.7,2.6,1],[16,-9.4,3.1,1],[18.8,-4,2.5,0],[18.7,1.2,3,1],
-  [16.6,8.3,2.7,0],[12,10.8,3,1],[7.6,11,2.4,0],[-9,10.7,2.6,0],[-17,10,2,0]
- ])tree(...t);
- for(let i=0;i<25;i++){
-  const x=-8+random()*18,z=-11.5+random()*1.5;
-  B(x,.08,z,.25,.16,.24,random()>.5?'#b7b47b':'#869668');
- }
- B(1,.15,5.9,10,.3,.85,'#bcb9a3');B(1,.32,6.23,10,.025,.08,'#edc36a');
- for(let x=-3.7;x<6;x+=.5)B(x,.329,6.05,.25,.016,.08,'#dedccb');
- B(1.5,.9,4.8,7.3,1.8,1.65,'#c17a58');B(1.5,.23,4.8,7.5,.4,1.8,'#e2d4b0');
- for(let x=-1.6;x<5;x+=1.35){
-  B(x,1.07,5.642,.78,.73,.025,'#f1d5a0',0,true);
-  B(x,1.09,5.66,.055,.76,.035,'#665e51');B(x,1.08,5.663,.8,.05,.028,'#665e51');
- }
- B(1.5,1.86,4.8,7.8,.23,2.05,'#4b6764');
- B(1.5,2.05,4.65,7.2,.22,1.6,'#587871');B(1.5,2.23,4.6,6.8,.18,1.1,'#62837b');
- B(3.7,2.4,4.45,.43,.7,.46,'#b37e66');
- B(-2.8,1.23,5.55,.12,2.2,.12,'#5d7367');B(5.7,1.23,5.55,.12,2.2,.12,'#5d7367');
- B(1.45,2.29,5.52,8.9,.12,.72,'#e5d6a5');
- B(-4.25,.48,5.7,.85,.13,.33,'#836851');
- B(-4.55,.25,5.7,.12,.5,.22,'#556157');B(-3.96,.25,5.7,.12,.5,.22,'#556157');
- person(-1.6,5.91);person(3.6,5.82,'#6f969a');person(4.3,5.81,'#c9b36b');
-
- B(7,1.15,-5.28,6,2.3,1.9,'#a97e61');B(7,2.4,-5.28,6.35,.23,2.18,'#52716e');
- B(7,2.59,-5.3,5.9,.18,1.5,'#63817a');
- for(let x=5;x<=9;x+=2){
-  B(x,1.05,-4.31,1.45,1.6,.035,'#4e6663');
-  for(let y=.45;y<1.8;y+=.25)B(x,y,-4.285,1.42,.035,.018,'#7b8c79');
- }
- B(8,2.9,-5.3,.4,.8,.45,'#805e4c');
- B(1.8,.6,-5.5,1.4,1.2,1.2,'#728787');B(1.8,1.24,-5.5,1.6,.12,1.4,'#485f61');
-
- B(-6.4,2.9,.3,1.65,1.35,1.65,'#bb9365');B(-6.4,3.63,.3,1.95,.15,1.95,'#4b7270');
- for(const x of[-7,-5.8])for(const z of[-.3,.9])B(x,1.35,z,.2,2.7,.2,'#7f7660');
- B(-6.4,2.6,1.15,1.67,.08,.06,'#5a6860');B(-6.4,3.2,1.15,1.67,.08,.06,'#5a6860');
- B(-5.52,1.9,.9,.06,2.7,.12,'#e0c791');
- for(let y=.6;y<3.2;y+=.3)B(-5.52,y,.9,.3,.045,.13,'#e0c791');
-
- for(let i=0;i<7;i++)crate(7.4+(i%3)*.83,1.03+Math.floor(i/3)*.74,0,i%2?'#a8ac8c':'#b88656');
- B(11.7,2.1,.85,.26,4.2,.26,'#d1a65b');B(8.9,4.13,.85,5.8,.24,.3,'#e4b867');
- B(11.7,3.95,.85,.65,.65,.7,'#9e946c');
- for(const z of sidings){
-  B(11.5,.45,z,.2,.65,1.4,'#606b61');B(11.38,.72,z,.3,.23,1.5,'#bd745b');
-  for(const dz of[-.5,.5])B(11.2,.67,z+dz,.2,.23,.25,'#304947');
- }
- person(6.3,1.25,'#d0af5c');person(-3.9,-4.9,'#78a49b');
- for(const [x,z]of[[-5,5.9],[6.4,5.9],[12.3,-2],[-10,-5.2]]){
-  B(x,1.4,z,.1,2.8,.1,'#50615a');B(x,2.83,z,.55,.12,.55,'#dfc992',0,true);
-  B(x,2.96,z,.67,.14,.65,'#506e65');lamps.push({x,z});
- }
- for(let x=-10;x<12;x+=.8){
-  B(x,.34,-8.25,.06,.68,.06,'#b4aa82');B(x,.45,-8.25,.82,.075,.08,'#d0c19a');
- }
- for(let x=-5.5;x<5.8;x+=.32)B(x,.16,11.2,.17,.22,.14,random()>.5?'#d6aa78':'#adb072');
-}
-buildScenery();
-function localBox(p,x,y,z,w,h,d,c,lit=false){
- box(p.x+x*Math.cos(p.a)-z*Math.sin(p.a),y,p.z+x*Math.sin(p.a)+z*Math.cos(p.a),w,h,d,c,p.a,lit);
-}
-function vehicle(p,type,accent){
- const C=(x,y,z,w,h,d,c,lit=false)=>localBox(p,x,y,z,w,h,d,c,lit);
- for(const x of[-.7,.7])for(const z of[-.49,.49]){
-  C(x,.28,z,.37,.38,.15,'#344345');C(x,.29,z+(z>0?.08:-.08),.13,.13,.025,'#b5ad8b');
- }
- C(0,.53,0,2.14,.22,.98,'#445756');
- C(-1.12,.49,0,.2,.1,.18,'#58665b');C(1.12,.49,0,.2,.1,.18,'#58665b');
- if(type==='steam'){
-  C(.3,.99,0,1.25,.7,.8,'#334f50');C(.3,1.36,0,1.12,.13,.59,'#496465');
-  C(-.63,1.08,0,.67,.97,.94,'#c57658');C(-.63,1.63,0,.88,.17,1.1,'#3a5454');
-  for(const z of[-.48,.48])C(-.6,1.27,z,.41,.38,.035,'#f0d1a0',true);
-  C(.7,1.65,0,.28,.55,.29,'#374d4b');C(.7,1.95,0,.4,.13,.38,'#50605a');
-  C(.05,1.53,0,.23,.27,.23,'#d9b76e');C(1.02,1.04,0,.15,.24,.24,'#fce2a5',true);
-  C(.35,.75,0,1.4,.08,.89,'#d3b780');
- }else if(type==='coach'){
-  C(0,1.04,0,2.05,.84,.97,'#6f9b93');C(0,1.48,0,2.22,.19,1.09,'#e1d4b0');
-  C(0,.77,0,2.08,.15,1.01,'#e4c895');
-  for(const z of[-.49,.49])for(const x of[-.66,0,.66])C(x,1.19,z,.44,.37,.035,'#dce2bb',true);
- }else if(type==='diesel'){
-  C(.28,.94,0,1.27,.67,.85,'#d3a853');C(-.65,1.14,0,.65,1.05,.96,'#648d81');
-  C(-.65,1.72,0,.88,.15,1.09,'#d8c99d');
-  for(const z of[-.49,.49]){
-   C(-.65,1.4,z,.4,.33,.025,'#d9e2c6',true);C(.29,.89,z,1.2,.11,.025,'#536862');
-  }
-  C(.51,1.45,0,.16,.43,.17,'#53645b');C(1.05,1.14,0,.08,.18,.22,'#ffe2a7',true);
- }else{
-  C(0,.75,0,2.01,.35,1.05,accent);C(0,1.17,0,1.85,.55,.9,accent);
-  for(const x of[-.72,-.24,.24,.72])for(const z of[-.46,.46])C(x,1.18,z,.045,.55,.035,'#e0c39b');
-  C(0,1.5,0,1.92,.12,.97,accent);
- }
-}
-function train(t,track,freightTrain=false){
- const kinds=freightTrain?['diesel','freight','freight']:['steam','coach','coach','coach'];
- for(let i=kinds.length-1;i>=0;i--)vehicle(track.pose(t.s-i*2.4),kinds[i],i===1?'#bc7b61':'#9ba17a');
-}
-function signal(x,z,green){
- box(x,1.05,z,.1,2.1,.1,'#4b6055');box(x,1.89,z,.36,.68,.28,'#344a47');
- box(x,green?1.72:2.06,z+.15,.17,.17,.045,green?'#9ad994':'#ef8465',0,true);
-}
-function crossing(){
- for(const z of[-6.325,6.325])for(const side of[-1,1]){
-  const x=-13+side*1.3,zz=z+side*1.65;
-  box(x,.54,zz,.24,1.05,.25,'#ddd4ac');box(x,.73,zz,.27,.32,.28,'#b9785f');
-  const angle=(1-gate)*Math.PI/2,len=2.3;
-  for(let i=0;i<8;i++){
-   const along=(i+.5)*len/8;
-   box(x-side*Math.cos(angle)*along,1.06+Math.sin(angle)*along,zz,
-    Math.max(.08,Math.cos(angle)*len/8),Math.max(.1,Math.sin(angle)*len/8),.12,i%2?'#e4d8b7':'#be7258');
-  }
-  box(x,1.63,zz,.44,.22,.25,'#3e5250');
-  for(const dx of[-.13,.13])box(x+dx,1.63,zz+.15,.11,.12,.035,
-   gate>.01&&(Math.floor(time*3)+(dx>0?1:0))%2?'#ff7054':'#824d43',0,true);
- }
-}
-function label(x,y,z,text,fill='#f5e9c9',size=.48){
- const p=P(x,y,z);ctx.font='bold '+Math.max(8,S*size)+'px ui-monospace,monospace';
- ctx.textAlign='center';ctx.fillStyle=fill;ctx.fillText(text,p.x,p.y);
-}
-
-function render(){
- sy=Math.sin(yaw);cy=Math.cos(yaw);se=Math.sin(elevation);ce=Math.cos(elevation);
- S=Math.min(W/50,H/32)*zoom;ox=W*.51;oy=H*.55;
- const bg=ctx.createLinearGradient(0,0,0,H);
- bg.addColorStop(0,color('#ede2cc'));bg.addColorStop(1,color('#c7d0bd'));
- ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
- const sp=P(0,-4.6,0);
- ctx.fillStyle='rgba(24,51,44,.15)';ctx.beginPath();ctx.ellipse(sp.x,sp.y,22*S,7*S,0,0,TAU);ctx.fill();
- for(const x of[-18.5,18.5])for(const z of[-10.5,10.5])box(x,-2.7,z,.85,4.1,.85,'#8e6245');
- flush();box(0,-.73,0,42,.9,26,'#a37b54');flush();box(0,-.19,0,41,.24,25,'#73966e');flush();
- for(let z=-12;z<12;z+=.9)groundRect(0,z,40.8,.013,'#83946b',-.06);
- for(let y=-1.03;y<-.32;y+=.19){
-  box(0,y,13.015,41.9,.025,.024,'#bb9369');box(21.015,y,0,.024,.025,25.9,'#c6a37b');
- }
- flush();
- groundRect(-13,0,2.6,25,'#87948a');
- for(let z=-12;z<12;z+=1.3)groundRect(-13,z,.045,.6,'#e6dbb1',.03);
- groundRect(6,-5.3,12,3.1,'#a4a18a');groundRect(7,1.1,10,1.5,'#a5a58a');
- for(const t of trees)shadow(t.x+.45,t.z+.4,1.15,.6);
- shadow(1,5,5,1);shadow(-6,.6,1.3,1);
- for(const [x,z,w,d]of[[-8.3,2.8,3.6,1.9],[-8.5,3,4.5,1.2],[-8,3.25,2.8,2.4]])groundRect(x,z,w,d,'#699796',.026);
- for(let i=0;i<5;i++)groundRect(-9.3+i*.53,2.8+Math.sin(time*.8+i)*.35,.35,.08,'#bdd3ae',.03);
- rails(mainTracks[0]);rails(bypassTrack);rails(yardTracks[0]);
- for(const branch of yardBranches)rails(branch);
- for(const z of[-6.325,6.325])for(const x of[-13.9,-12.1])groundRect(x,z,.22,2,'#cfbea0',.095);
- if(nightMix>.02)for(const l of lamps){
-  const p=P(l.x,.07,l.z),g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,S*2);
-  g.addColorStop(0,'rgba(255,207,115,'+(.22*nightMix)+')');g.addColorStop(1,'rgba(255,207,115,0)');
-  ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(p.x,p.y,S*2,S,0,0,TAU);ctx.fill();
- }
- for(const o of objects)box(...o);
- signal(7.1,5.8,mainTrain.next===mainTrain.route);signal(-3.7,-4.65,freight.dwell<=0);
- for(const [x,z,on]of[[7,7,mainTrain.route===1],[-4,-3.5,freight.route!==0]]){
-  box(x,.19,z,.65,.09,.12,'#dcd4ad',on?-.35:0);
-  box(x,.26,z-1.03,.19,.48,.17,'#597166');
-  box(x+(on?.16:-.16),.49,z-1.03,.45,.08,.14,'#efc674');
- }
- crossing();
- for(const car of cars){
-  const p={x:car.x,z:car.z,a:car.dir*Math.PI/2};
-  localBox(p,0,.43,0,1.15,.43,.59,car.color);localBox(p,-.12,.79,0,.64,.35,.53,'#dde0c2');
-  for(const x of[-.37,.37])for(const z of[-.3,.3])localBox(p,x,.24,z,.23,.26,.1,'#42514e');
-  localBox(p,.55,.48,0,.04,.12,.48,'#ffedc4',true);
- }
- train(mainTrain,mainTracks[mainTrain.route]);train(freight,yardTracks[freight.route],true);
- const hookY=2.45+Math.sin(time*.85)*.45;
- box(8.6,(4+hookY)/2,.85,.035,4-hookY,.035,'#536b61');box(8.6,hookY,.85,.23,.28,.2,'#8b7253');
- for(const p of particles)box(p.x,p.y,p.z,p.size,p.size,p.size,p.kind===1?p.color:'#ddd8bd',time*.15,p.kind===1,Math.min(.75,p.life/p.max));
- flush();
- label(1.5,2.42,5.6,'LITTLE JUNCTION',color('#fff0c9',1,true),.35);
- label(7,2.7,-4.3,'GOODS & CO.',color('#ecdfbe'),.34);
- for(let i=0;i<3;i++)label(12.15,.45,sidings[i],'0'+(i+1),color(freight.job===i?'#ffe2a1':'#e2d9b1',1,true),.45);
- label(-6.4,3.13,1.17,'WATER',color('#f0dfb5'),.3);
- if(nightMix>.05)for(const l of lamps){
-  const p=P(l.x,2.86,l.z),g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,S*.9);
-  g.addColorStop(0,'rgba(255,224,149,'+(.7*nightMix)+')');g.addColorStop(1,'rgba(255,224,149,0)');
-  ctx.fillStyle=g;ctx.fillRect(p.x-S,p.y-S,2*S,2*S);
- }
-}
-
-/* All controls work without dependencies or external assets. */
-function togglePause(){
- paused=!paused;sync();
- if(paused&&rumbleGain)rumbleGain.gain.setTargetAtTime(0,audioContext.currentTime,.1);
-}
-function toggleNight(){
- night=!night;$('night').setAttribute('aria-pressed',String(night));
- $('night').textContent=night?'☀ Day':'☾ Night';$('sceneTitle').classList.toggle('night',night);
-}
-$('pause').onclick=togglePause;$('night').onclick=toggleNight;$('whistle').onclick=whistle;
-$('throttle').oninput=e=>{power=Number(e.target.value)/100;sync()};
-$('platform').onclick=()=>setRoute(0);$('bypass').onclick=()=>setRoute(1);
-document.querySelectorAll('[data-siding]').forEach(b=>b.onclick=()=>setSiding(Number(b.dataset.siding)));
-$('dispatch').onclick=()=>{
- if(paused){toast('Resume the yard to dispatch freight.');return}
- if(freight.dwell>0){freight.dwell=.01;toast('Freight ready. Off we go.')}
- else toast('Freight is moving. Siding 0'+(freight.next+1)+' is next.');
-};
-$('sound').onclick=async()=>{
- try{
-  if(!audioContext){
-   const Audio=window.AudioContext||window.webkitAudioContext;
-   if(!Audio)throw Error('Audio unavailable');
-   audioContext=new Audio();rumble=audioContext.createOscillator();rumbleGain=audioContext.createGain();
-   rumble.type='triangle';rumble.frequency.value=45;rumbleGain.gain.value=0;
-   rumble.connect(rumbleGain);rumbleGain.connect(audioContext.destination);rumble.start();
-  }
-  await audioContext.resume();soundOn=!soundOn;
-  $('sound').setAttribute('aria-pressed',String(soundOn));$('sound').textContent=soundOn?'♪ Sound on':'♪ Sound';
-  if(soundOn)note(660,.15,.025);
- }catch(e){toast('Audio is unavailable in this browser. The railway still runs.')}
-};
-function fit(){yaw=.42;elevation=.64;zoom=1}
-$('fit').onclick=fit;$('zoomIn').onclick=()=>zoom=clamp(zoom*1.18,.65,2.5);$('zoomOut').onclick=()=>zoom=clamp(zoom/1.18,.65,2.5);
+function drawMap(){if(!cab)return;const ctx=$('minimap').getContext('2d'),w=160,h=100;ctx.clearRect(0,0,w,h);ctx.strokeStyle='#819788';ctx.lineWidth=1.4;ctx.beginPath();for(let i=0;i<mainTracks[mainTrain.route].p.length;i++){const p=mainTracks[mainTrain.route].p[i],x=80+p.x*1.35,y=50+p.z*1.35;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.stroke();const p=mainTracks[mainTrain.route].point(mainTrain.s);ctx.fillStyle='#ffce79';ctx.beginPath();ctx.arc(80+p.x*1.35,50+p.z*1.35,3,0,TAU);ctx.fill()}
+function togglePause(){paused=!paused;sync();if(paused&&rumbleGain)rumbleGain.gain.setTargetAtTime(0,audioContext.currentTime,.08)}
+function toggleCab(){cab=!cab;lookYaw=0;lookPitch=0;document.querySelector('.world').classList.toggle('in-cab',cab);$('cabFrame').hidden=!cab;$('sceneTitle').hidden=cab;sync();resize();toast(cab?'You are in the cab. Drag to look, H for the horn.':'Back at the model table.')}
+function fit(){if(cab){lookYaw=0;lookPitch=0;cabFov=74}else{yaw=.36;elevation=.74;zoom=1}}
+function changeZoom(f){if(cab)cabFov=clamp(cabFov/f,48,100);else zoom=clamp(zoom*f,.65,3.8)}
 function help(){if(!$('instructions').open)$('instructions').showModal()}
-$('help').onclick=help;$('closeHelp').onclick=()=>$('instructions').close();
-$('instructions').addEventListener('click',e=>{
- if(e.target===$('instructions')){
-  const r=e.target.getBoundingClientRect();
-  if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();
- }
-});
-$('save').onclick=()=>{
- const clone=document.documentElement.cloneNode(true);
- clone.querySelector('#instructions').removeAttribute('open');clone.querySelector('#toast').classList.remove('show');
- const blob=new Blob(['<!doctype html>\n'+clone.outerHTML],{type:'text/html;charset=utf-8'});
- const url=URL.createObjectURL(blob),a=document.createElement('a');
- a.href=url;a.download='index.html';document.body.appendChild(a);a.click();a.remove();
- setTimeout(()=>URL.revokeObjectURL(url),5000);
-};
-const pointers=new Map;
-let dragDistance=0,pinchDistance=0;
-canvas.addEventListener('pointerdown',e=>{
- canvas.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
- if(pointers.size===1)dragDistance=0;
- if(pointers.size===2){const p=[...pointers.values()];pinchDistance=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y)}
-});
-canvas.addEventListener('pointermove',e=>{
- if(!pointers.has(e.pointerId))return;
- const old=pointers.get(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
- if(pointers.size===2){
-  const p=[...pointers.values()],d=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);
-  if(pinchDistance>0)zoom=clamp(zoom*d/pinchDistance,.65,2.5);
-  pinchDistance=d;dragDistance=99;
- }else{
-  const dx=e.clientX-old.x,dy=e.clientY-old.y;dragDistance+=Math.abs(dx)+Math.abs(dy);
-  yaw+=dx*.007;elevation=clamp(elevation+dy*.003,.35,.95);
- }
-});
-function pointerEnd(e){
- if(!pointers.has(e.pointerId))return;pointers.delete(e.pointerId);
- if(e.type==='pointerup'&&dragDistance<7){
-  const r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
-  let selected=null,best=35;
-  for(const t of trees){
-   const p=P(t.x,t.h*.8,t.z),d=Math.hypot(p.x-x,p.y-y);
-   if(d<best){selected=t;best=d}
-  }
-  if(selected){
-   for(let i=0;i<12;i++)puff(selected.x+(random()-.5),selected.z,selected.h,1);
-   toast('Even the trees are happy to see a train.');note(1100,.12,.025);note(1450,.1,.02,'sine',.12);
-  }
- }
-}
-canvas.addEventListener('pointerup',pointerEnd);canvas.addEventListener('pointercancel',pointerEnd);canvas.addEventListener('lostpointercapture',pointerEnd);
-canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=clamp(zoom*Math.exp(-e.deltaY*.001),.65,2.5)},{passive:false});
-document.addEventListener('keydown',e=>{
- if(e.target.matches('input,textarea,select,button')||e.ctrlKey||e.metaKey||e.altKey||e.repeat)return;
- if($('instructions').open)return;
- if(e.code==='Space'){e.preventDefault();togglePause()}
- if(e.key.toLowerCase()==='h')whistle();if(e.key.toLowerCase()==='n')toggleNight();
- if(['1','2','3'].includes(e.key))setSiding(Number(e.key)-1);if(e.key==='?')help();
-});
+$('pause').onclick=togglePause;$('horn').onclick=horn;$('cabHorn').onclick=horn;$('cabToggle').onclick=toggleCab;
+$('night').onclick=()=>{night=!night;$('night').setAttribute('aria-pressed',String(night));$('night').textContent=night?'☀ Day':'☾ Night';$('sceneTitle').classList.toggle('night',night)};
+$('sound').onclick=async()=>{try{await ensureAudio();soundOn=!soundOn;$('sound').setAttribute('aria-pressed',String(soundOn));$('sound').textContent=soundOn?'♪ Ambience on':'♪ Ambience';if(soundOn)note(660,.15,.02)}catch(e){toast('Audio is unavailable in this browser.')}};
+$('throttle').oninput=e=>{power=Number(e.target.value)/100;sync()};$('platform').onclick=()=>setRoute(0);$('bypass').onclick=()=>setRoute(1);document.querySelectorAll('[data-siding]').forEach(b=>b.onclick=()=>setSiding(Number(b.dataset.siding)));
+$('dispatch').onclick=()=>{if(paused)toast('Resume the yard to dispatch freight.');else if(freight.dwell>0){freight.dwell=.01;toast('Freight ready. Off we go.')}else toast('Freight is moving. Siding 0'+(freight.next+1)+' is next.')};
+$('zoomIn').onclick=()=>changeZoom(1.18);$('zoomOut').onclick=()=>changeZoom(1/1.18);$('fit').onclick=fit;$('help').onclick=help;$('closeHelp').onclick=()=>$('instructions').close();
+$('instructions').addEventListener('click',e=>{if(e.target===$('instructions')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}});
+$('save').onclick=()=>{const clone=document.documentElement.cloneNode(true);clone.querySelector('#instructions').removeAttribute('open');clone.querySelector('#toast').classList.remove('show');const blob=new Blob(['<!doctype html>\n'+clone.outerHTML],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='index.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000)};
+const pointers=new Map;let pinchDistance=0,dragDistance=0;
+canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pointers.size===1)dragDistance=0;if(pointers.size===2){const p=[...pointers.values()];pinchDistance=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y)}});
+canvas.addEventListener('pointermove',e=>{if(!pointers.has(e.pointerId))return;const old=pointers.get(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pointers.size===2){const p=[...pointers.values()],d=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);if(pinchDistance>0)changeZoom(d/pinchDistance);pinchDistance=d;dragDistance=99}else{const dx=e.clientX-old.x,dy=e.clientY-old.y;dragDistance+=Math.abs(dx)+Math.abs(dy);if(cab){lookYaw=clamp(lookYaw+dx*.004,-1.1,1.1);lookPitch=clamp(lookPitch+dy*.003,-.35,.35)}else{yaw-=dx*.005;elevation=clamp(elevation+dy*.003,.3,1.1)}}});
+function pointerEnd(e){if(!pointers.has(e.pointerId))return;pointers.delete(e.pointerId);if(cab||e.type!=='pointerup'||dragDistance>7||!currentVP)return;const r=canvas.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;for(const t of trees){const p=[t.x,t.y+t.h*.7,t.z,1],q=[0,0,0,0];for(let row=0;row<4;row++)for(let c=0;c<4;c++)q[row]+=currentVP[c*4+row]*p[c];const x=(q[0]/q[3]+1)*W/2,y=(1-q[1]/q[3])*H/2;if(Math.hypot(mx-x,my-y)<15){for(let i=0;i<15;i++)puff(t.x,t.y+t.h,t.z,true);toast('A little forest celebration.');note(1100,.15,.02);break}}}
+for(const name of['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(name,pointerEnd);
+canvas.addEventListener('wheel',e=>{e.preventDefault();changeZoom(Math.exp(-e.deltaY*.001))},{passive:false});
+document.addEventListener('keydown',e=>{if(e.target.matches('input,textarea,select,button')||e.ctrlKey||e.metaKey||e.altKey||e.repeat||$('instructions').open)return;const key=e.key.toLowerCase();if(e.code==='Space'){e.preventDefault();togglePause()}if(key==='h')horn();if(key==='c')toggleCab();if(key==='n')$('night').click();if(['1','2','3'].includes(key))setSiding(Number(key)-1);if(key==='?')help()});
+function resize(){const r=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,1.75);W=Math.max(1,r.width);H=Math.max(1,r.height);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr)}
 let last=performance.now(),hud=0;
-function resize(){
- const r=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
- W=Math.max(1,r.width);H=Math.max(1,r.height);
- canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
-}
-if('ResizeObserver' in window)new ResizeObserver(resize).observe(canvas);else window.addEventListener('resize',resize);
-document.addEventListener('visibilitychange',()=>{
- last=performance.now();
- if(document.hidden&&rumbleGain)rumbleGain.gain.setTargetAtTime(0,audioContext.currentTime,.1);
-});
-function frame(now){
- const dt=clamp((now-last)/1000,0,.05);last=now;update(dt);render();hud+=dt;
- if(hud>.12){hud=0;sync()}requestAnimationFrame(frame);
-}
-resize();sync();$('throttle').value=65;
-$('night').setAttribute('aria-pressed','false');$('night').textContent='☾ Night';$('sceneTitle').classList.remove('night');
-$('sound').setAttribute('aria-pressed','false');$('sound').textContent='♪ Sound';
-if(paused)toast('Motion is paused to match your device preference. Press Run yard to begin.');
-requestAnimationFrame(frame);
+function frame(now){const dt=clamp((now-last)/1000,0,.05);last=now;if(!document.hidden){update(dt);render();hud+=dt;if(hud>.1){hud=0;sync()}}requestAnimationFrame(frame)}
+document.addEventListener('visibilitychange',()=>{last=performance.now();if(document.hidden&&rumbleGain)rumbleGain.gain.setTargetAtTime(0,audioContext.currentTime,.08)});
+canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();renderFailed=true;paused=true;sync();toast('Graphics paused. Reload the page to restore the railway.')});
+try{initGL();buildWorld();resize();if('ResizeObserver'in window)new ResizeObserver(resize).observe(canvas);else window.addEventListener('resize',resize);$('throttle').value=65;$('cabFrame').hidden=true;$('sceneTitle').hidden=false;document.querySelector('.world').classList.remove('in-cab');$('night').setAttribute('aria-pressed','false');$('sound').setAttribute('aria-pressed','false');$('night').textContent='☾ Night';$('sound').textContent='♪ Ambience';$('sceneTitle').classList.remove('night');sync();if(paused)toast('Motion is paused to match your device preference. Press Run yard to begin.');requestAnimationFrame(frame)}catch(e){renderFailed=true;$('sceneTitle').hidden=false;$('sceneTitle').querySelector('h2').textContent='Graphics could not start.';$('sceneTitle').querySelector('p').textContent='Open this file in a browser with WebGL enabled, then reload.';console.error(e)}
+
 </script>
 </body>
 </html>
