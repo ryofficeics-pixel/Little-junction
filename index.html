@@ -485,6 +485,8 @@ function terrain(x,z,near=nearestRail(x,z)){
  let y=rawTerrain(x,z),r=Math.abs(x-riverX(z));
  if(r<49)y=mix(-6,y,smooth((r-33)/16));
  if(near.p)y=mix(near.p.y-.4,y,smooth((near.d-7)/12));
+ // Keep the river bed below bridges: rail grading must not fill the waterway.
+ if(r<44)y=-6;
  if(x>-300&&x<-212&&z>78&&z<111)y=0;
  const road=roadCoordinates(x,z);if(Math.abs(road.along)<3.2&&Math.abs(road.across)<43)y=Math.min(y,roadPose.y-.4);
  return Math.floor(y*2)/2;
@@ -511,7 +513,7 @@ function rails(m,t){
  m.detail=false;
 }
 function buildBridge(m,t){let start=null;for(let s=0;s<=t.L+.5;s+=1){const p=t.point(Math.min(s,t.L)),over=Math.abs(p.x-riverX(p.z))<44;if(over&&start===null)start=s;if((!over||s>=t.L)&&start!==null){bridgeSpans.push({t,a:start,b:Math.min(s,t.L)});start=null}}
- for(const span of bridgeSpans.filter(b=>b.t===t)){for(let s=span.a;s<span.b;s+=3){const p=t.pose(s);L(m,p,0,-.27,0,3.1,.55,2.8,'#758e86');for(const side of[-1,1]){L(m,p,0,1.4,side*1.35,3.1,.12,.12,'#91aaa0');L(m,p,0,.65,side*1.35,.15,1.45,.15,'#718d82')}if(Math.floor((s-span.a)/3)%3===0){m.box(p.x,(p.y-6)/2,p.z,1.2,p.y+6,1.5,'#a0a290');for(const side of[-1,1]){const a=local(p,0,0,side*1.45),b=local(t.pose(Math.min(s+8,span.b)),0,4.8,side*1.45);m.beam(a,b,.25,.24,'#64877e')}}}}
+ for(const span of bridgeSpans.filter(b=>b.t===t)){for(let s=span.a;s<span.b;s+=3){const p=t.pose(s);L(m,p,0,-.27,0,3.1,.55,2.8,'#758e86');for(const side of[-1,1]){L(m,p,0,1.4,side*1.35,3.1,.12,.12,'#91aaa0');L(m,p,0,.65,side*1.35,.15,1.45,.15,'#718d82')}if(Math.floor((s-span.a)/3)%3===0){m.box(p.x,(p.y-6)/2,p.z,1.2,p.y+6,1.5,'#a0a290');const q=t.pose(Math.min(s+9,span.b));for(const side of[-1,1]){const a=local(p,0,0,side*1.45),b=local(q,0,4.8,side*1.45),top=local(p,0,4.8,side*1.45),end=local(q,0,0,side*1.45);m.beam(a,b,.22,.22,'#64877e');m.beam(top,end,.22,.22,'#64877e');m.beam(top,b,.24,.25,'#8ca99d');m.beam(a,top,.22,.24,'#78968a')}m.beam(local(p,0,4.8,-1.45),local(p,0,4.8,1.45),.22,.24,'#8ca99d')}}}
 }
 function buildTunnel(m,t){for(const[a,b]of t.tunnels){for(let s=a;s<b;s+=2){const p=t.pose(Math.min(b,s+1));for(const side of[-1,1]){L(m,p,0,1.8,side*2.15,2.1,3.8,.5,'#718078');L(m,p,0,5,side*3.1,2.1,5.4,1.5,'#a7b5ad')}L(m,p,0,3.8,0,2.1,.6,4.8,'#82928a');L(m,p,0,7.5,0,2.1,6.4,6.8,'#c7d4cf');if(Math.floor((s-a)/2)%4===0){L(m,p,0,3.43,0,.3,.12,3.8,'#cfcec0');L(m,p,0,2.55,1.85,.4,.2,.12,'#ffe2a2',1)}}for(const s of[a,b]){const p=t.pose(s);for(const side of[-1,1])L(m,p,0,2,side*2.3,1.3,4.4,.9,'#c8c8b6');L(m,p,0,4.2,0,1.5,.6,5.5,'#d5d3c1')}}}
 function buildWorld(){
@@ -645,7 +647,8 @@ function softwareRender(c,p,sky,dark,visible){const ctx=softContext;ctx.setTrans
  const moving=softFaces(dynamicMesh,c,sky,dark);let a=0,b=0;while(a<fixed.length||b<moving.length)paint(b>=moving.length||(a<fixed.length&&fixed[a].z>moving[b].z)?fixed[a++]:moving[b++]);
 }
 function projectionPoint(p){const q=[0,0,0,0],v=[p.x,p.y,p.z,1];for(let r=0;r<4;r++)for(let i=0;i<4;i++)q[r]+=currentVP[i*4+r]*v[i];return{x:(q[0]/q[3]+1)*W/2,y:(1-q[1]/q[3])*H/2}}
-function drawAtlasLabels(){const layer=$('mapLabels');layer.hidden=!atlas;if(!atlas)return;layer.replaceChildren();for(const t of fleet){const p=projectionPoint(trainPose(t)),b=document.createElement('button');b.textContent=t.short;b.style.left=p.x+'px';b.style.top=p.y+'px';b.style.borderColor=t.color;b.onclick=()=>{selectTrain(t.id);atlas=false;viewChanged()};b.setAttribute('aria-label','Follow '+t.name);layer.appendChild(b)}}
+const mapLabelButtons=new Map();
+function drawAtlasLabels(){const layer=$('mapLabels');layer.hidden=!atlas;if(!atlas)return;for(const t of fleet){const p=projectionPoint(trainPose(t));let b=mapLabelButtons.get(t.id);if(!b){b=document.createElement('button');b.textContent=t.short;b.style.borderColor=t.color;b.onclick=()=>{selectTrain(t.id);atlas=false;viewChanged()};b.setAttribute('aria-label','Follow '+t.name);layer.appendChild(b);mapLabelButtons.set(t.id,b)}b.style.left=p.x+'px';b.style.top=p.y+'px'}}
 function drawMap(){const ctx=$('minimap').getContext('2d'),w=200,h=125,s=Math.min(186/TABLE.width,111/TABLE.depth);ctx.clearRect(0,0,w,h);ctx.fillStyle='#183831';ctx.fillRect(0,0,w,h);
  const xy=p=>[w/2+p.x*s,h/2+p.z*s];for(const e of [...sections.flat(),scenic]){ctx.strokeStyle=e.scenic?'#b7ad73':'#809c8a';ctx.lineWidth=e.scenic?1:1.1;ctx.beginPath();for(let i=0;i<e.track.p.length;i+=6){const p=xy(e.track.p[i]);if(!i)ctx.moveTo(...p);else ctx.lineTo(...p)}ctx.stroke()}
  for(const t of fleet){const p=xy(trainPose(t));ctx.fillStyle=t.color;ctx.beginPath();ctx.arc(...p,t.id===selected?3.7:2.3,0,TAU);ctx.fill();if(t.id===selected){ctx.strokeStyle='#fff6d1';ctx.lineWidth=1;ctx.stroke()}}
@@ -657,6 +660,7 @@ function fit(){lookYaw=0;lookPitch=0;cabFov=74;yaw=.36;elevation=.66;zoom=1;soft
 function changeZoom(f){if(cab)cabFov=clamp(cabFov/f,48,100);else zoom=clamp(zoom*f,atlas?.65:.55,atlas?2.2:2.4)}
 function help(){if(!$('instructions').open)$('instructions').showModal()}
 function setupControls(){
+ $('night').setAttribute('aria-pressed','false');$('night').textContent='☾ Night';$('sound').setAttribute('aria-pressed','false');$('sound').textContent='♪ Ambience';$('sceneTitle').classList.remove('night');
  $('pause').onclick=togglePause;$('horn').onclick=horn;$('cabHorn').onclick=horn;$('cabToggle').onclick=toggleCab;$('nextTrain').onclick=()=>selectTrain(selected+1);$('cabNext').onclick=()=>selectTrain(selected+1);$('trainSelect').onchange=e=>selectTrain(Number(e.target.value));
  for(const t of fleet)$('fleet'+t.id).onclick=()=>selectTrain(t.id);
  $('mapToggle').onclick=()=>{atlas=!atlas;cab=false;zoom=1;viewChanged()};
